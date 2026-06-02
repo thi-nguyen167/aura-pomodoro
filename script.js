@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Initialize the audio logic
   const myMixer = new AudioMixer();
 
-  // Initialize the particles logic ONCE
+  // Initialize the particles logic
   await loadTrianglesPreset(tsParticles);
   await tsParticles.load({
     id: "tsparticles",
