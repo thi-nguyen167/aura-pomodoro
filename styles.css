@@ -409,6 +409,7 @@ h4.group-label {
     padding: 1.6rem 2.4rem;
     border-radius: var(--radius-full);
     width: 80%;
+    cursor: pointer;
 }
 
 .lofi-label {
@@ -416,6 +417,7 @@ h4.group-label {
     font-weight: 700;
     letter-spacing: 0.1em;
     color: var(--primary-container);
+    margin-bottom: 0.8rem;
 }
 
 .lofi-track {

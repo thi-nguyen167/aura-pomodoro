@@ -8,187 +8,196 @@
     <link rel="stylesheet" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-    <<script src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-triangles@3/tsparticles.preset.triangles.bundle.min.js"></script>
-    
+    <<script
+        src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-triangles@3/tsparticles.preset.triangles.bundle.min.js">
+        </script>
+
 </head>
 
 <body>
     <div id="tsparticles"></div>
-        <header class="header">
-            <div class="brand-container">
-                <h1 class="brand-name">Aura <br /> <span class="brand-name-sm">Pomodoro</span></h1>
+    <header class="header">
+        <div class="brand-container">
+            <h1 class="brand-name">Aura <br /> <span class="brand-name-sm">Pomodoro</span></h1>
+        </div>
+    </header>
+    <main class="main-dashboard">
+
+        <section class="panel-left">
+
+            <div class="mixer-card">
+                <div class="mixer-title-container">
+                    <h2>SoundScapes</h2>
+                    <p class="text-muted body-md">Compose your atmosphere</p>
+                </div>
+
+                <div class="mixer-controls">
+                    <div class="mixer-item">
+                        <div class="mixer-label">
+                            <span class="material-symbols-outlined">rainy</span>
+                            <label for="vol-rain" class="sr-only">Rain</label>
+                        </div>
+                        <div class="mixer-slider">
+                            <input type="range" id="vol-rain" class="vol-slider" min="0" max="100" value="0">
+                            <span class="vol-percentage">45%</span>
+                        </div>
+                    </div>
+
+                    <div class="mixer-item">
+                        <div class="mixer-label">
+                            <span class="material-symbols-outlined">local_cafe</span>
+                            <label for="vol-cafe" class="sr-only">Cafe</label>
+                        </div>
+                        <div class="mixer-slider">
+                            <input type="range" id="vol-cafe" class="vol-slider" min="0" max="100" value="0">
+                            <span class="vol-percentage">20%</span>
+                        </div>
+                    </div>
+
+                    <div class="mixer-item">
+                        <div class="mixer-label">
+                            <span class="material-symbols-outlined">forest</span>
+                            <label for="vol-forest" class="sr-only">Forest</label>
+                        </div>
+                        <div class="mixer-slider">
+                            <input type="range" id="vol-forest" class="vol-slider" min="0" max="100" value="0">
+                            <span class="vol-percentage">0%</span>
+                        </div>
+                    </div>
+                    <div class="mixer-item">
+                        <div class="mixer-label">
+                            <span class="material-symbols-outlined">mode_heat</span>
+                            <label for="vol-fire" class="sr-only">Campfire</label>
+                        </div>
+                        <div class="mixer-slider">
+                            <input type="range" id="vol-fire" class="vol-slider" min="0" max="100" value="0" />
+                            <span class="vol-percentage">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary">Save Preset</button>
             </div>
-        </header>
-        <main class="main-dashboard">
 
-            <section class="panel-left">
-
-                <div class="mixer-card">
-                    <div class="mixer-title-container">
-                        <h2>SoundScapes</h2>
-                        <p class="text-muted body-md">Compose your atmosphere</p>
+            <div class="tracking-card">
+                <h3 class="tracking-title">Daily Progress</h3>
+                <div class="tracking-stats">
+                    <div class="stat-box">
+                        <p class="stat-value">4.5h</p>
+                        <p class="stat-label">Focus Time</p>
                     </div>
-
-                    <div class="mixer-controls">
-                        <div class="mixer-item">
-                            <div class="mixer-label">
-                                <span class="material-symbols-outlined">rainy</span>
-                                <label for="vol-rain" class="sr-only">Rain</label>
-                            </div>
-                            <div class="mixer-slider">
-                                <input type="range" id="vol-rain" class="vol-slider" min="0" max="100" value="45">
-                                <span class="vol-percentage">45%</span>
-                            </div>
-                        </div>
-
-                        <div class="mixer-item">
-                            <div class="mixer-label">
-                                <span class="material-symbols-outlined">local_cafe</span>
-                                <label for="vol-cafe" class="sr-only">Cafe</label>
-                            </div>
-                            <div class="mixer-slider">
-                                <input type="range" id="vol-cafe" class="vol-slider" min="0" max="100" value="20">
-                                <span class="vol-percentage">20%</span>
-                            </div>
-                        </div>
-
-                        <div class="mixer-item">
-                            <div class="mixer-label">
-                                <span class="material-symbols-outlined">forest</span>
-                                <label for="vol-forest" class="sr-only">Forest</label>
-                            </div>
-                            <div class="mixer-slider">
-                                <input type="range" id="vol-forest" class="vol-slider" min="0" max="100" value="0">
-                                <span class="vol-percentage">0%</span>
-                            </div>
-                        </div>
-                        <div class="mixer-item">
-                            <div class="mixer-label">
-                                <span class="material-symbols-outlined">mode_heat</span>
-                                <label for="vol-fire" class="sr-only">Campfire</label>
-                            </div>
-                            <div class="mixer-slider">
-                                <input type="range" id="vol-fire" class="vol-slider" min="0" max="100" value="0">
-                                <span class="vol-percentage">0%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="button" class="btn btn-primary">Save Preset</button>
-                </div>
-
-                <div class="tracking-card">
-                    <h3 class="tracking-title">Daily Progress</h3>
-                    <div class="tracking-stats">
-                        <div class="stat-box">
-                            <p class="stat-value">4.5h</p>
-                            <p class="stat-label">Focus Time</p>
-                        </div>
-                        <div class="stat-box">
-                            <p class="stat-value">82%</p>
-                            <p class="stat-label">Goal Met</p>
-                        </div>
+                    <div class="stat-box">
+                        <p class="stat-value">82%</p>
+                        <p class="stat-label">Goal Met</p>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section class="panel-mid">
+        <section class="panel-mid">
 
-                <div class="timer-card glass-card">
-                    <div class="timer-tabs">
-                        <button type="button" class="btn btn-tab active">Focus</button>
-                        <button type="button" class="btn btn-tab">Short Break</button>
-                        <button type="button" class="btn btn-tab">Long Break</button>
-                    </div>
+            <div class="timer-card glass-card">
+                <div class="timer-tabs">
+                    <button type="button" class="btn btn-tab active">Focus</button>
+                    <button type="button" class="btn btn-tab">Short Break</button>
+                    <button type="button" class="btn btn-tab">Long Break</button>
+                </div>
 
-                    <div class="timer-display">
-                        <span class="time-huge">25:00</span>
-                        <p class="timer-subtitle">STAY IN THE FLOW</p>
-                    </div>
+                <div class="timer-display">
+                    <span class="time-huge">25:00</span>
+                    <p class="timer-subtitle">STAY IN THE FLOW</p>
+                </div>
 
-                    <div class="timer-controls">
-                        <button type="button" class="btn-icon" aria-label="Reset Timer">
-                            <span class="material-symbols-outlined">refresh</span>
-                        </button>
-                        <button type="button" class="btn-play" aria-label="Play Timer">
-                            <span class="material-symbols-outlined">play_arrow</span>
-                        </button>
-                        <button type="button" class="btn-icon" aria-label="Skip Session">
-                            <span class="material-symbols-outlined">pause</span>
-                        </button>
+                <div class="timer-controls">
+                    <button type="button" class="btn-icon" aria-label="Reset Timer">
+                        <span class="material-symbols-outlined">refresh</span>
+                    </button>
+                    <button type="button" class="btn-play" aria-label="Play Timer">
+                        <span class="material-symbols-outlined">play_arrow</span>
+                    </button>
+                    <button type="button" class="btn-icon" aria-label="Skip Session">
+                        <span class="material-symbols-outlined">pause</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="lofi-card glass-card" id="lofi-toggle">
+                <span class="material-symbols-outlined" id="lofi-icon">music_note</span>
+                <div class="lofi-info">
+                    <p class="lofi-label">LO-FI BEATS</p>
+                    <p class="lofi-track">Coffee Lofi - Chill Lofi Ambient</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel-right">
+
+            <div class="task-card">
+                <h2>Tasks</h2>
+
+                <div class="task-group">
+                    <h4 class="group-label">FOCUSING ON</h4>
+                    <div class="task-item active-task">
+                        <p>Deep work session</p>
                     </div>
                 </div>
 
-                <div class="lofi-card">
-                    <span class="material-symbols-outlined">music_note</span>
-                    <div class="lofi-info">
-                        <p class="lofi-label">LO-FI BEATS</p>
-                        <p class="lofi-track">Lo-Fi Girl - Midnight Study Session</p>
-                    </div>
+                <div class="task-group">
+                    <h4 class="group-label">UP NEXT</h4>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox">
+                                Outline new project
+                            </label>
+                            <span class="task-time">45m</span>
+                        </li>
+                        <li class="task-item">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox">
+                                Email response batch
+                            </label>
+                            <span class="task-time">15m</span>
+                        </li>
+                    </ul>
+                    <button type="button" class="btn btn-tertiary">Add new task</button>
                 </div>
-            </section>
 
-            <section class="panel-right">
-
-                <div class="task-card">
-                    <h2>Tasks</h2>
-
-                    <div class="task-group">
-                        <h4 class="group-label">FOCUSING ON</h4>
-                        <div class="task-item active-task">
-                            <p>Deep work session</p>
-                        </div>
+                <div class="task-group">
+                    <div class="group-header">
+                        <h4 class="group-label">DONE</h4>
+                        <span class="badge">3</span>
                     </div>
-
-                    <div class="task-group">
-                        <h4 class="group-label">UP NEXT</h4>
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <label class="checkbox-wrapper">
-                                    <input type="checkbox">
-                                    Outline new project
-                                </label>
-                                <span class="task-time">45m</span>
-                            </li>
-                            <li class="task-item">
-                                <label class="checkbox-wrapper">
-                                    <input type="checkbox">
-                                    Email response batch
-                                </label>
-                                <span class="task-time">15m</span>
-                            </li>
-                        </ul>
-                        <button type="button" class="btn btn-tertiary">Add new task</button>
-                    </div>
-
-                    <div class="task-group">
-                        <div class="group-header">
-                            <h4 class="group-label">DONE</h4>
-                            <span class="badge">3</span>
-                        </div>
-                        <ul class="task-list done-list">
-                            <li class="task-item completed">
-                                <span class="material-symbols-outlined">check_circle</span>
-                                <span class="task-text">Morning meditation</span>
-                            </li>
-                            <li class="task-item completed">
-                                <span class="material-symbols-outlined">check_circle</span>
-                                <span class="task-text">Brief team sync</span>
-                            </li>
-                        </ul>
-                    </div>
-
+                    <ul class="task-list done-list">
+                        <li class="task-item completed">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <span class="task-text">Morning meditation</span>
+                        </li>
+                        <li class="task-item completed">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <span class="task-text">Brief team sync</span>
+                        </li>
+                    </ul>
                 </div>
-            </section>
 
-        </main>
+            </div>
+        </section>
 
-        <footer class="footer">
-            <p>&copy; 2026 Aura. All rights reserved. | Designed and Developed by Thi Nguyen</p>
-        </footer>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Aura. All rights reserved. | Designed and Developed by Thi Nguyen</p>
+    </footer>
+
+    <audio id="audio-rain" src="audio/rain.mp3" loop></audio>
+    <audio id="audio-cafe" src="audio/cafe.mp3" loop></audio>
+    <audio id="audio-forest" src="audio/forest.mp3" loop></audio>
+    <audio id="audio-fire" src="audio/fire.mp3" loop></audio>
+    <audio id="audio-lofi" src="audio/lofi-1.mp3"></audio>
 
 
-<script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 
 </body>
