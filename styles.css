@@ -84,10 +84,13 @@ ul {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; 
-    pointer-events: none; 
+    z-index: -1;
+    pointer-events: none;
 }
-.header, .main-dashboard, .footer {
+
+.header,
+.main-dashboard,
+.footer {
     position: relative;
     z-index: 10;
 }
@@ -138,6 +141,14 @@ h4.group-label {
    ========================================= */
 .header {
     padding: var(--container-padding) var(--container-padding) 0;
+
+}
+
+.brand-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .main-dashboard {
@@ -167,6 +178,13 @@ h4.group-label {
 .panel-mid {
     align-items: center;
     justify-content: center;
+}
+
+.drawer-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -2rem;
 }
 
 /* =========================================
@@ -239,7 +257,8 @@ h4.group-label {
     background: var(--glass-highlight);
     border-radius: var(--radius-full);
     outline: none;
-    appearance: none; /* <-- Add the standard property last */
+    appearance: none;
+    /* <-- Add the standard property last */
 }
 
 .vol-slider::-webkit-slider-thumb {
@@ -501,7 +520,7 @@ h4.group-label {
 
 .btn-tertiary:hover {
     color: var(--primary);
-    
+
 }
 
 .task-item.completed {
@@ -519,4 +538,74 @@ h4.group-label {
     padding: 1.6rem;
     font-size: 1.2rem;
     color: var(--text-muted);
+}
+
+/* =========================================
+   RESPONSIVE DESIGN (Tablets & Mobile)
+   ========================================= */
+@media (max-width: 1024px) {
+
+    html {
+        font-size: 50%;
+    }
+
+    /* Change Grid to a single vertical column */
+    .main-dashboard {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        /* Allow scrolling on small screens */
+        padding-bottom: 120px;
+        /* Space for the fixed footer */
+    }
+
+    /* Adjust Timer and Task cards to take full width */
+    .panel-mid,
+    .panel-right {
+        width: 100%;
+        gap: 2.4rem;
+    }
+
+    /* Make the Timer numbers slightly smaller for mobile */
+    .time-huge {
+        font-size: 7.2rem;
+    }
+
+    /* =========================================
+       THE MIXER DRAWER
+       ========================================= */
+
+    /* Hide the left panel off the screen by default */
+    .panel-left {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        /* Hides it to the left */
+        width: 85%;
+        max-width: 400px;
+        height: 100vh;
+        background-color: var(--background);
+        z-index: 100;
+        padding: 4rem 2.4rem;
+        transition: left 0.3s ease-in-out;
+        /* Smooth sliding animation */
+        box-shadow: var(--shadow-drop);
+    }
+
+    /* When the 'open' class is added via JS, slide it in */
+    .panel-left.open {
+        left: 0;
+    }
+
+    /* Hamburger Menu Button (Visible only on mobile) */
+    .mobile-menu-btn {
+        display: flex;
+    }
+}
+
+/* Hide the hamburger button on Desktop */
+@media (min-width: 1025px) {
+    .mobile-menu-btn {
+        display: none;
+    }
 }

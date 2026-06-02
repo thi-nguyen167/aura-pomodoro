@@ -19,11 +19,21 @@
     <header class="header">
         <div class="brand-container">
             <h1 class="brand-name">Aura <br /> <span class="brand-name-sm">Pomodoro</span></h1>
+
+            <button type="button" class="btn-icon mobile-menu-btn" id="open-mixer-btn" aria-label="Open Soundscapes">
+                <span class="material-symbols-outlined">tune</span>
+            </button>
         </div>
     </header>
     <main class="main-dashboard">
 
-        <section class="panel-left">
+        <section class="panel-left" id="mixer-drawer">
+
+            <div class="drawer-container">
+                <button type="button" class="btn-icon mobile-menu-btn" id="close-mixer-btn">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
 
             <div class="mixer-card">
                 <div class="mixer-title-container">

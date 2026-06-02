@@ -1,4 +1,18 @@
 "use strict"
+// Mobile Menu Drawer Logic
+const mixerDrawer = document.getElementById('mixer-drawer');
+const openBtn = document.getElementById('open-mixer-btn');
+const closeBtn = document.getElementById('close-mixer-btn');
+
+if (openBtn && closeBtn && mixerDrawer) {
+  openBtn.addEventListener('click', () => {
+    mixerDrawer.classList.add('open');
+  });
+
+  closeBtn.addEventListener('click', () => {
+    mixerDrawer.classList.remove('open');
+  });
+}
 
 class AudioMixer {
   constructor() {
@@ -297,6 +311,19 @@ document.addEventListener("DOMContentLoaded", async () => {
           type: "square",
         },
       },
+
+      responsive: [
+        {
+          maxWidth: 768,
+          options: {
+            particles: {
+              number: {
+                value: 30,
+              },
+            }
+          }
+        }
+      ],
       preset: "triangles",
     },
   });
