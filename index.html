@@ -97,7 +97,7 @@
                         <p class="stat-label">Focus Time</p>
                     </div>
                     <div class="stat-box">
-                        <p class="stat-value">82%</p>
+                        <p class="stat-percentage">82%</p>
                         <p class="stat-label">Goal Met</p>
                     </div>
                 </div>
@@ -147,49 +147,24 @@
 
                 <div class="task-group">
                     <h4 class="group-label">FOCUSING ON</h4>
-                    <div class="task-item active-task">
-                        <p>Deep work session</p>
+                    <div class="task-item active-task" id="active-task-container">
+                        <p>What is your main focus?</p>
                     </div>
                 </div>
 
                 <div class="task-group">
                     <h4 class="group-label">UP NEXT</h4>
-                    <ul class="task-list">
-                        <li class="task-item">
-                            <label class="checkbox-wrapper">
-                                <input type="checkbox">
-                                Outline new project
-                            </label>
-                            <span class="task-time">45m</span>
-                        </li>
-                        <li class="task-item">
-                            <label class="checkbox-wrapper">
-                                <input type="checkbox">
-                                Email response batch
-                            </label>
-                            <span class="task-time">15m</span>
-                        </li>
-                    </ul>
-                    <button type="button" class="btn btn-tertiary">Add new task</button>
+                    <ul class="task-list" id="up-next-list"></ul>
+                    <button type="button" class="btn btn-tertiary" id="add-task-btn">+ Add new task</button>
                 </div>
 
                 <div class="task-group">
                     <div class="group-header">
                         <h4 class="group-label">DONE</h4>
-                        <span class="badge">3</span>
+                        <span class="badge" id="done-badge">0 Today</span>
                     </div>
-                    <ul class="task-list done-list">
-                        <li class="task-item completed">
-                            <span class="material-symbols-outlined">check_circle</span>
-                            <span class="task-text">Morning meditation</span>
-                        </li>
-                        <li class="task-item completed">
-                            <span class="material-symbols-outlined">check_circle</span>
-                            <span class="task-text">Brief team sync</span>
-                        </li>
-                    </ul>
+                    <ul class="task-list done-list" id="done-list"></ul>
                 </div>
-
             </div>
         </section>
 

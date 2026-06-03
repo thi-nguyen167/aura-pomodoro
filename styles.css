@@ -53,7 +53,7 @@ html {
 
 body {
     font-family: var(--font-sans);
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-weight: 400;
     color: var(--on-surface);
     background-color: var(--background);
@@ -100,16 +100,16 @@ ul {
    ========================================= */
 h1.brand-name {
     font-family: var(--font-mono);
-    font-size: 6.4rem;
+    font-size: 5.2rem;
     font-weight: 700;
     color: var(--primary);
-    line-height: 0.4;
+    line-height: 0.8;
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.4);
 }
 
 .brand-name-sm {
     font-family: var(--font-sans);
-    font-size: 1.8rem;
+    font-size: 2.4rem;
     text-transform: uppercase;
     letter-spacing: 0.2em;
     color: var(--primary-container);
@@ -117,13 +117,13 @@ h1.brand-name {
 
 h2 {
     font-family: var(--font-mono);
-    font-size: 2.4rem;
+    font-size: 3.2rem;
     font-weight: 600;
 }
 
 h4.group-label {
     font-family: var(--font-sans);
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -233,7 +233,6 @@ h4.group-label {
     display: flex;
     gap: 1rem;
     align-items: center;
-    font-size: 1.4rem;
 }
 
 .mixer-slider {
@@ -243,7 +242,6 @@ h4.group-label {
 }
 
 .vol-percentage {
-    font-size: 1.2rem;
     color: var(--text-muted);
     width: 3rem;
     text-align: right;
@@ -252,7 +250,7 @@ h4.group-label {
 /* Custom Slider */
 .vol-slider {
     -webkit-appearance: none;
-    width: 100%;
+    width: 88%;
     height: 6px;
     background: var(--glass-highlight);
     border-radius: var(--radius-full);
@@ -302,7 +300,8 @@ h4.group-label {
 
 .tracking-title {
     font-family: var(--font-sans);
-    font-size: 1.4rem;
+    font-size: 1.6rem;
+    text-transform: uppercase;
     color: var(--primary-container);
     margin-bottom: 1.6rem;
 }
@@ -321,7 +320,6 @@ h4.group-label {
 
 .stat-label {
     font-family: var(--font-sub);
-    font-size: 1.2rem;
 }
 
 /* =========================================
@@ -371,7 +369,6 @@ h4.group-label {
 }
 
 .timer-subtitle {
-    font-size: 1.2rem;
     letter-spacing: 0.3em;
     color: var(--primary-container);
     margin-top: 1.6rem;
@@ -432,7 +429,6 @@ h4.group-label {
 }
 
 .lofi-label {
-    font-size: 1rem;
     font-weight: 700;
     letter-spacing: 0.1em;
     color: var(--primary-container);
@@ -440,7 +436,6 @@ h4.group-label {
 }
 
 .lofi-track {
-    font-size: 1.4rem;
     color: var(--primary);
 }
 
@@ -453,7 +448,7 @@ h4.group-label {
 }
 
 .task-group {
-    margin-top: 2.4rem;
+    margin: 4.8rem 0;
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
@@ -479,7 +474,7 @@ h4.group-label {
     padding: 1.6rem;
     border-radius: var(--radius-md);
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     gap: 1.2rem;
     transition: background 0.2s;
@@ -489,10 +484,37 @@ h4.group-label {
     border-left: 4px solid var(--primary-container);
 }
 
+.task-item.completed {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
 .task-list {
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+    max-height: 25vh;
+    overflow-y: auto;
+    padding-right: 0.6rem;
+    
+
+}
+/* design the scroll bar */
+.task-card::-webkit-scrollbar, .task-list::-webkit-scrollbar {
+    width: 0.6rem;
+}
+.task-card::-webkit-scrollbar, .task-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-full);
+}
+.task-card::-webkit-scrollbar, .task-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    transition: background 0.3s;
+}
+.task-card::-webkit-scrollbar, .task-list::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-container); 
 }
 
 .checkbox-wrapper {
@@ -500,15 +522,15 @@ h4.group-label {
     align-items: center;
     gap: 1.2rem;
     cursor: pointer;
-    font-size: 1.4rem;
 }
 
 .task-time {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: var(--text-muted);
 }
 
 .btn-tertiary {
+    margin-top: 3.2rem;
     color: var(--text-muted);
     font-size: 1.4rem;
     text-align: center;
@@ -545,18 +567,13 @@ h4.group-label {
    ========================================= */
 @media (max-width: 1024px) {
 
-    html {
-        font-size: 50%;
-    }
-
     /* Change Grid to a single vertical column */
     .main-dashboard {
         display: flex;
         flex-direction: column;
         overflow-y: auto;
-        /* Allow scrolling on small screens */
         padding-bottom: 120px;
-        /* Space for the fixed footer */
+
     }
 
     /* Adjust Timer and Task cards to take full width */
@@ -564,11 +581,6 @@ h4.group-label {
     .panel-right {
         width: 100%;
         gap: 2.4rem;
-    }
-
-    /* Make the Timer numbers slightly smaller for mobile */
-    .time-huge {
-        font-size: 7.2rem;
     }
 
     /* =========================================
@@ -583,7 +595,7 @@ h4.group-label {
         /* Hides it to the left */
         width: 85%;
         max-width: 400px;
-        height: 100vh;
+        height: 98vh;
         background-color: var(--background);
         z-index: 100;
         padding: 4rem 2.4rem;
@@ -601,6 +613,30 @@ h4.group-label {
     .mobile-menu-btn {
         display: flex;
     }
+
+
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 55%;
+    }
+}
+
+@media (max-width: 420px) {
+    html {
+        font-size: 45%;
+    }
+
+    .task-item {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .task-item.completed {
+        flex-direction: row;
+    }
+
 }
 
 /* Hide the hamburger button on Desktop */

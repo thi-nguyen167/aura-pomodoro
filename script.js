@@ -31,7 +31,7 @@ class AudioMixer {
     // lofi Playlist
     this.lofiPlaylist = [
       { title: "Coffee Lofi - Chill Lofi Ambient", src: "audio/lofi-1.mp3" },
-      { title: "Lofi Ambient Background Music for Sleep, Relax & Night Vibes", src: "audio/lofi-2.mp3" },
+      { title: "Lofi Ambient Music", src: "audio/lofi-2.mp3" },
       { title: "Deep Focus Lofi", src: "audio/lofi-3.mp3" },
       { title: "Lofi Relax Song", src: "audio/lofi-4.mp3" },
       { title: "Dreamy LoFi Music", src: "audio/lofi-5.mp3" },
@@ -45,7 +45,6 @@ class AudioMixer {
   }
 
   init() {
-    // Loop through the sliders and add the event to each
     this.sliders.forEach(slider => {
 
       // set initial state based on the HTML
@@ -56,10 +55,11 @@ class AudioMixer {
         this.handleVolumeChange(e.target);
       })
 
-      // Lofi click event
+      
 
     })
 
+    // Lofi click event
     if (this.lofiToggelCard && this.lofiAudio) {
       this.lofiToggelCard.addEventListener('click', () => {
         this.toggleLofi();
@@ -249,8 +249,12 @@ class Timer {
   completeSession() {
     this.pauseTimer();
 
-    // Notification later and update the progress logic
-    console.log(`Session ${this.currentMode} complete!`);
+    if (this.currentMode === 'focus') {
+      if (typeof myProgress !== 'undefined') {
+        myProgress.addFocusSession(25);
+      }
+      console.log("Focus session complete! Progress updated.");
+    }
 
     this.skipSession();
 
@@ -292,35 +296,303 @@ class Timer {
   }
 }
 
+class TaskManager {
+  constructor() {
+    // 1. CORE STATE: This array holds all task data
+    this.tasks = [];
 
+    // 2. DOM Elements
+    this.upNextList = document.getElementById('up-next-list');
+    this.doneList = document.getElementById('done-list');
+    this.doneBadge = document.getElementById('done-badge');
+    this.addTaskBtn = document.getElementById('add-task-btn');
+    this.activeTaskContainer = document.getElementById('active-task-container');
 
+    this.init();
+  }
 
+  init() {
+    // load existing tasks from Local Storage when the app starts
+    this.loadTasks();
+
+    // listen for "Add Task"
+    this.addTaskBtn.addEventListener('click', () => {
+      this.createNewTask();
+    });
+
+    // event Delegation for Up Next List (Handles Check, Set Active, Delete)
+    this.upNextList.addEventListener('click', (e) => {
+      const taskId = e.target.closest('.task-item').dataset.id;
+
+      if (e.target.type === 'checkbox') {
+        this.completeTask(taskId);
+      } else if (e.target.closest('.btn-set-active')) {
+        this.setActiveTask(taskId);
+      } else if (e.target.closest('.btn-delete')) {
+        this.deleteTask(taskId);
+      }
+    });
+
+    this.render();
+  }
+
+  createNewTask() {
+    const taskText = prompt("What do you need to do?");
+    if (!taskText) return;
+
+    const taskTime = prompt("Estimated time (e.g., 25m):", "25m") || "25m";
+
+    // create a unique object for the new task
+    const newTask = {
+      id: Date.now().toString(), // Generates a unique ID
+      text: taskText,
+      time: taskTime,
+      status: 'pending', // Can be 'pending', 'active', or 'done'
+      dateAdded: new Date().toDateString()
+    };
+
+    this.tasks.push(newTask);
+    this.saveTasks();
+    this.render();
+  }
+
+  setActiveTask(id) {
+    this.tasks.forEach(task => {
+      if (task.status === 'active') task.status = 'pending';
+    });
+
+    // find the chosen task and set it to active
+    const selectedTask = this.tasks.find(task => task.id === id);
+    if (selectedTask) selectedTask.status = 'active';
+
+    this.saveTasks();
+    this.render();
+  }
+
+  completeTask(id) {
+    const taskIndex = this.tasks.findIndex(task => task.id === id);
+    if (taskIndex !== -1) {
+      this.tasks[taskIndex].status = 'done';
+      this.saveTasks();
+      this.render();
+    }
+  }
+
+  deleteTask(id) {
+    // filter out the task with the matching ID
+    this.tasks = this.tasks.filter(task => task.id !== id);
+    this.saveTasks();
+    this.render();
+  }
+
+  // helper method to turn text like "25m" or "1h" into numbers
+  parseTimeToMinutes(timeString) {
+    if (!timeString) return 0;
+
+    const str = timeString.toLowerCase().trim();
+
+    if (str.includes('h')) {
+      return parseFloat(str) * 60; // Converts hours to minutes
+    }
+
+    return parseFloat(str) || 0; // Strips the 'm' and returns the number
+  }
+
+  // Calculates the total and sends it to the ProgressTracker
+  updateDynamicGoal() {
+    let totalGoalMinutes = 0;
+    const today = new Date().toDateString();
+
+    this.tasks.forEach(task => {
+      // Only count tasks created today towards today's goal
+      if (task.dateAdded === today) {
+        totalGoalMinutes += this.parseTimeToMinutes(task.time);
+      }
+    });
+
+    // Send the final number to the ProgressTracker!
+    if (typeof myProgress !== 'undefined') {
+      myProgress.setDailyGoal(totalGoalMinutes);
+    }
+  }
+
+  // LOCAL STORAGE
+
+  saveTasks() {
+    localStorage.setItem('aura_tasks', JSON.stringify(this.tasks));
+  }
+
+  loadTasks() {
+    const savedData = localStorage.getItem('aura_tasks');
+    if (savedData) {
+      this.tasks = JSON.parse(savedData);
+      this.checkDailyReset();
+    }
+  }
+
+  checkDailyReset() {
+    const today = new Date().toDateString();
+    // keep pending/active tasks, but remove 'done' tasks if they are from a previous day
+    this.tasks = this.tasks.filter(task => {
+      if (task.status === 'done' && task.dateAdded !== today) {
+        return false; // Remove it
+      }
+      return true; // Keep it
+    });
+    this.saveTasks();
+  }
+
+  // --- DOM RENDERING ---
+
+  render() {
+    this.upNextList.innerHTML = '';
+    this.doneList.innerHTML = '';
+
+    let doneCount = 0;
+    let hasActiveTask = false;
+
+    // loop through the state array and rebuild the HTML
+    this.tasks.forEach(task => {
+
+      if (task.status === 'active') {
+        hasActiveTask = true;
+        this.activeTaskContainer.innerHTML = `<p>${task.text}</p>`;
+      }
+
+      else if (task.status === 'pending') {
+        const li = document.createElement('li');
+        li.className = 'task-item';
+        li.dataset.id = task.id; // Store ID in the HTML
+
+        // add a container for controls (Focus icon and Delete icon)
+        li.innerHTML = `
+                    <label class="checkbox-wrapper">
+                        <input type="checkbox"> 
+                        ${task.text}
+                    </label>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <span class="task-time">${task.time}</span>
+                        <button class="btn-icon btn-set-active" style="width: 24px; height: 24px; padding: 0;" aria-label="Set as Focus">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">play_arrow</span>
+                        </button>
+                        <button class="btn-icon btn-delete" style="width: 24px; height: 24px; padding: 0;" aria-label="Delete Task">
+                            <span class="material-symbols-outlined" style="font-size: 18px; color: var(--error);">delete</span>
+                        </button>
+                    </div>
+                `;
+        this.upNextList.appendChild(li);
+      }
+
+      else if (task.status === 'done') {
+        doneCount++;
+        const li = document.createElement('li');
+        li.className = 'task-item completed';
+        li.innerHTML = `
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <span class="task-text">${task.text}</span>
+                `;
+        this.doneList.appendChild(li);
+      }
+    });
+
+    // handle Empty States and Counters
+    if (!hasActiveTask) {
+      this.activeTaskContainer.innerHTML = `<p class="text-muted">Select a task to focus on</p>`;
+    }
+
+      this.doneBadge.textContent = `${doneCount} Today`;
+  
+      this.updateDynamicGoal();
+
+  }
+}
+
+class ProgressTracker {
+  constructor() {
+    this.focusTimeMinutes = 0; // Starts at 0
+    this.dailyGoalMinutes = 0; // Starts at 0
+
+    this.timeDisplay = document.querySelector('.stat-value');
+    this.percentageDisplay = document.querySelector('.stat-percentage') || document.querySelectorAll('.stat-value')[1];
+    this.goalLabel = document.querySelectorAll('.stat-label')[1];
+
+    this.updateDisplay();
+  }
+
+  addFocusSession(minutes) {
+    this.focusTimeMinutes += minutes;
+    this.updateDisplay();
+  }
+
+  // Method to accept dynamic goal updates from TaskManager
+  setDailyGoal(minutes) {
+    this.dailyGoalMinutes = minutes;
+    this.updateDisplay();
+  }
+
+  updateDisplay() {
+    const hours = (this.focusTimeMinutes / 60).toFixed(1);
+    this.timeDisplay.textContent = `${hours}h`;
+
+    let percentage = 0;
+
+    // Prevent Divide-By-Zero errors if no tasks exist yet
+    if (this.dailyGoalMinutes > 0) {
+      percentage = Math.floor((this.focusTimeMinutes / this.dailyGoalMinutes) * 100);
+    }
+
+    if (percentage > 100) percentage = 100;
+
+    this.percentageDisplay.textContent = `${percentage}%`;
+
+    const goalHours = (this.dailyGoalMinutes / 60).toFixed(1);
+    
+    if (this.goalLabel) {
+      // If the goal is 0, just show "Goal Met". Otherwise, show "Goal Met (of Xh)"
+      if (this.dailyGoalMinutes === 0) {
+         this.goalLabel.textContent = "Goal Met";
+      } else {
+         this.goalLabel.textContent = `Goal Met (of ${goalHours}h)`;
+      }
+    }
+  }
+}
+
+let myProgress;
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Initialize the audio logic
+
+  // Initialize the audio mixer
   const myMixer = new AudioMixer();
+
+  // Initialize ProgressTracker FIRST, so it is ready to receive data
+  myProgress = new ProgressTracker();
+
+  // Initialize TaskManager SECOND, so it can send the initial goal to myProgress
+  const myTaskManager = new TaskManager();
+
+  // Initialize Timer LAST, so it can tell myProgress when a session finishes
   const myTimer = new Timer();
 
-  // Initialize the particles logic
+  // Initialize the particles logic (Your existing code here is perfect)
   await loadTrianglesPreset(tsParticles);
   await tsParticles.load({
     id: "tsparticles",
     options: {
       particles: {
-        shape: {
-          type: "square",
-        },
+        shape: { type: "square" },
       },
-
       responsive: [
+        {
+          maxWidth: 1024,
+          options: {
+            particles: { number: { value: 50 } }
+          }
+        },
         {
           maxWidth: 768,
           options: {
-            particles: {
-              number: {
-                value: 30,
-              },
-            }
+            particles: { number: { value: 30 } }
           }
         }
       ],
@@ -328,5 +600,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     },
   });
 });
-
-
