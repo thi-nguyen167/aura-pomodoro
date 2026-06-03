@@ -211,6 +211,7 @@ class Timer {
       longBreak: 15 * 60
     }
 
+
     this.currentMode = 'focus';
     this.timeLeft = this.modes[this.currentMode];
     this.timeInterval = null;
@@ -226,11 +227,17 @@ class Timer {
     this.btnSkip = document.querySelector('.btn-skip');
     this.btnPlayIcon = this.btnPlay.querySelector('.material-symbols-outlined');
 
+    this.audioAlarm = document.getElementById('audio-alarm');
 
     this.init();
   }
 
   init() {
+
+    if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
+      Notification.requestPermission();
+    }
+
     this.btnPlay.addEventListener('click', () => {
       this.toggleTimer();
     })
@@ -301,11 +308,31 @@ class Timer {
   completeSession() {
     this.pauseTimer();
 
+    // notification
+    if (this.audioAlarm) {
+      this.audioAlarm.volume = 0.6; // Not too loud!
+      this.audioAlarm.play().catch(err => console.log("Audio blocked by browser."));
+    }
+
+    // set up the text for the notification
+    let notifTitle = "Aura Pomodoro";
+    let notifBody = "";
+
     if (this.currentMode === 'focus') {
+      notifBody = "Focus session complete! Time for a well-deserved break.";
+      
       if (typeof myProgress !== 'undefined') {
         myProgress.addFocusSession(25);
       }
       console.log("Focus session complete! Progress updated.");
+    } else {
+      notifBody = "Break is over! Let's get back into the flow.";
+    }
+
+    if ("Notification" in window && Notification.permission === "granted") {
+      new Notification(notifTitle, {
+        body: notifBody, 
+      });
     }
 
     this.skipSession();
