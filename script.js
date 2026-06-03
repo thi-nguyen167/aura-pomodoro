@@ -28,6 +28,8 @@ class AudioMixer {
     // grab the audio
     this.lofiAudio = document.getElementById('audio-lofi');
 
+    this.savePresetBtn = document.getElementById('save-preset-btn');
+
     // lofi Playlist
     this.lofiPlaylist = [
       { title: "Coffee Lofi - Chill Lofi Ambient", src: "audio/lofi-1.mp3" },
@@ -45,6 +47,9 @@ class AudioMixer {
   }
 
   init() {
+
+    this.loadPreset();
+
     this.sliders.forEach(slider => {
 
       // set initial state based on the HTML
@@ -59,6 +64,13 @@ class AudioMixer {
 
     })
 
+    // listen for the Save Button click
+    if (this.savePresetBtn) {
+      this.savePresetBtn.addEventListener('click', () => {
+        this.savePreset();
+      });
+    }
+
     // Lofi click event
     if (this.lofiToggelCard && this.lofiAudio) {
       this.lofiToggelCard.addEventListener('click', () => {
@@ -71,6 +83,46 @@ class AudioMixer {
     }
   }
 
+// Local Storage
+
+  savePreset() {
+    // create an empty object to store our volumes
+    const presetData = {};
+
+    // loop through all sliders and save their ID and current value
+    this.sliders.forEach(slider => {
+      presetData[slider.id] = slider.value;
+    });
+
+    // convert the object to a string and save it to Local Storage
+    localStorage.setItem('aura_audio_preset', JSON.stringify(presetData));
+
+    // UX MAGIC: Give the user visual feedback that it worked
+    const originalText = this.savePresetBtn.textContent;
+    this.savePresetBtn.textContent = "Saved";
+    
+    // revert the button text after 2 seconds
+    setTimeout(() => {
+      this.savePresetBtn.textContent = originalText;
+    }, 2000);
+  }
+
+  loadPreset() {
+    // check if the user has a saved preset
+    const savedData = localStorage.getItem('aura_audio_preset');
+    
+    if (savedData) {
+      // turn the string back into a JavaScript object
+      const presetData = JSON.parse(savedData);
+
+      // loop through the sliders and override their values with the saved ones
+      this.sliders.forEach(slider => {
+        if (presetData[slider.id] !== undefined) {
+          slider.value = presetData[slider.id];
+        }
+      });
+    }
+  }
 
   // handle vloume function
   handleVolumeChange(slider) {
