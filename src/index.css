@@ -22,7 +22,7 @@
 
   /* Spacing */
   --spacing-gutter: 2.4rem;
-  --spacing-container-padding: 3.2rem;
+  --spacing-container: 3.2rem;
 
   /* Typography */
   --font-sans: "Cause", cursive;
@@ -31,4 +31,9 @@
   /* Box shadows */
   --shadow-glow: 0 0 40px rgba(157, 141, 255, 0.15);
   --shadow-drop: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  --shadow-text-custom: 2px 2px 4px rgba(255, 255, 255, 0.4);
+}
+
+@utility text-shadow-glow {
+  text-shadow: var(--shadow-text-custom);
 }
