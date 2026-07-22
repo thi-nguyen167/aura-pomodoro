@@ -1,71 +1,75 @@
-# Aura Pomodoro
+# React + TypeScript + Vite
 
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+Currently, two official plugins are available:
 
-A sleek, feature-rich Pomodoro timer application designed to help you stay in the flow, manage your daily tasks, and maintain focus with integrated Lo-Fi beats and customizable ambient sounds.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Features
+## React Compiler
 
-- **Intuitive Pomodoro Timer**
-    * Classic intervals: Focus (25m), Short Break (5m), and Long Break (15m).
-    * Seamless controls: Play, pause, skip, and reset your sessions.
-    * Browser tab updates to show the remaining time at a glance.
-- **Integrated Audio Mixer & Lo-Fi Player**
-    * Built-in Lo-Fi music player with an auto-playing, curated playlist to keep you in the zone.
-    * Ambient sound mixer with individual volume sliders to create your perfect background noise.
-    * Save and load your custom audio mixes using Local Storage presets.
-- **Smart Task Manager**
-    * Add daily to-dos with estimated completion times (e.g., "25m", "1h").
-    * Set tasks as "Active" to focus on them, or mark them as "Done".
-    * Daily auto-reset functionality clears old completed tasks while keeping your pending ones intact.
-- **Dynamic Progress Tracking**
-    * Automatically calculates a daily focus goal based on your pending tasks.
-    * Tracks your completed focus hours and displays your progress as a percentage towards your daily goal.
-- **Smart Notifications**
-    * Native desktop notifications and gentle audio chimes alert you when it's time to step away or get back to work.
-- **Beautiful, Responsive UI**
-    * Animated particle background powered by `tsParticles` for a calm, aesthetic environment.
-    * Fully responsive design with a mobile-friendly menu drawer.
-<img width="2880" height="1784" alt="thi-miranda348 github io_aura-pomodoro_" src="https://github.com/user-attachments/assets/17040b7b-4574-4037-9acc-ae4c7c9ff55e" />
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Getting Started
+## Expanding the ESLint configuration
 
-Since Aura Pomodoro is built with vanilla web technologies, you don't need any complex build tools or package managers to run it!
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-### Installation
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-1. Clone the repository to your local machine:
-   ```bash
-   git clone https://github.com/thi-miranda348/aura-pomodoro.git
-   ```
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-2. Navigate into the project folder:
-   ```bash
-   cd aura-pomodoro
-   ```
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 
-3. Open the index.html file in your favorite web browser. That's it!
+```
 
-## Build With
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-- **HTML5 & CSS3** - For structure and modern styling.
-- **Vanilla JavaScript (ES6+)** - For all core logic, timer state, and DOM manipulation.
-- **tsParticles** - For the interactive background animations.
-- **Web Storage API** - For persisting tasks and audio presets locally.
-- **Web Audio & Notifications API** - For sound playback and native browser alerts.
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-## Usage
-* Set your tasks: Click "Add Task" and input what you want to achieve today along with an estimated time.
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 
-* Start focusing: Select a task to make it active, then hit the Play button on the timer.
-
-* Set the mood: Open the audio mixer to adjust ambient sounds and toggle the Lo-Fi player on.
-
-* Take breaks: When the timer chimes, switch to the Short Break or Long Break tabs to recharge.
-
-
-## Author
-Thi Anh Thi Nguyen
+```
