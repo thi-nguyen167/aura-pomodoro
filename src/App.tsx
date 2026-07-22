@@ -6,15 +6,15 @@ import Task from "./components/Task";
 
 function App() {
   return (
-    <body className="w-full h-full font-sans text-base text-on-background bg-background overflow-hidden flex flex-col">
+    <div className="w-screen h-screen font-sans text-base text-on-background bg-background flex flex-col overflow-hidden">
       <Header />
 
-      <main className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr_1fr] gap-gutter p-container min-h-screen">
+      <main className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr_1fr] gap-gutter p-container min-h-0">
         <MixerDrawer />
         <Timer />
         <Task />
       </main>
-    </body>
+    </div>
   );
 }
 
