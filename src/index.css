@@ -21,8 +21,9 @@
   --color-glass-highlight: rgba(255, 255, 255, 0.1);
 
   /* Spacing */
-  --spacing-gutter: 2.4rem;
-  --spacing-container: 3.2rem;
+  --spacing-gutter: 24px;
+  --spacing-sm: 18px;
+  --spacing-container: 32px;
 
   /* Typography */
   --font-sans: "Cause", cursive;
@@ -36,4 +37,36 @@
 
 @utility text-shadow-glow {
   text-shadow: var(--shadow-text-custom);
+}
+
+@utility vol-slider {
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--color-primary-container);
+    transition: transform 0.2s ease;
+  }
+
+  &::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+
+  &::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 10px var(--color-primary-container);
+    transition: transform 0.2s ease;
+  }
+
+  &::-moz-range-thumb:hover {
+    transform: scale(1.2);
+  }
 }
