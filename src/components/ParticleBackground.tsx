@@ -19,40 +19,17 @@ export default function TriangleParticles() {
     () => ({
       particles: {
         number: {
-          value: 80,
+          value: 20,
         },
         shape: { type: "square" },
+        links: {
+          triangles: {
+            enable: true,
+            opacity: 0.1,
+            width: 1,
+          },
+        },
       },
-      responsive: [
-        {
-          maxWidth: 1024,
-          options: {
-            particles: {
-              number: { value: 80 },
-              opacity: {
-                value: 0.25,
-              },
-              links: {
-                opacity: 0.15,
-              },
-            },
-          },
-        },
-        {
-          maxWidth: 768,
-          options: {
-            particles: {
-              number: { value: 20 },
-              opacity: {
-                value: 0.15,
-              },
-              links: {
-                opacity: 0.08,
-              },
-            },
-          },
-        },
-      ],
       preset: "triangles",
     }),
     [],
