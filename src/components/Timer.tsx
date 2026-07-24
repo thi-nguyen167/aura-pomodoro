@@ -183,7 +183,7 @@ const Timer = ({
 
         {/* TIMER DISPLAY */}
         <div className="text-center">
-          <span className="font-mono text-5xl md:text-7xl lg:text-8xl leading-none font-bold text-on-surface tracking-tight">
+          <span className="font-mono text-7xl lg:text-8xl leading-none font-bold text-on-surface tracking-tight">
             {formatTime(timeLeft)}
           </span>
           <p className="text-base md:text-2xl lg:text-4xl tracking-[0.3em] font-bold text-primary-container mt-6 transition-all">
