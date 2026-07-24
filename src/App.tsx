@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import MixerDrawer from "./components/MixerDrawer";
@@ -33,6 +33,18 @@ function App() {
 
   const lofiAudioRef = useRef<HTMLAudioElement>(null);
 
+  useEffect(() => {
+    const audio = lofiAudioRef.current;
+    if (audio && isLofiPlaying) {
+      audio.volume = 0.5;
+      audio
+        .play()
+        .catch((err) =>
+          console.log("Lofi playback blocked on transition:", err),
+        );
+    }
+  }, [currentTrackIndex, isLofiPlaying]);
+
   const toggleLofi = () => {
     const audio = lofiAudioRef.current;
     if (!audio) return;
@@ -41,7 +53,7 @@ function App() {
       audio.pause();
       setIsLofiPlaying(false);
     } else {
-      audio.volume = 0.3;
+      audio.volume = 0.5;
       audio
         .play()
         .then(() => {
@@ -55,11 +67,14 @@ function App() {
     const nextIndex = (currentTrackIndex + 1) % LOFI_PLAYLIST.length;
     setCurrentTrackIndex(nextIndex);
     setCurrentTrackTitle(LOFI_PLAYLIST[nextIndex].title);
+  };
 
-    if (lofiAudioRef.current) {
-      lofiAudioRef.current.src = LOFI_PLAYLIST[nextIndex].src;
-      lofiAudioRef.current.play().catch(() => {});
-    }
+  const handleSessionComplete = (minutes: number) => {
+    setFocusTimeMinutes((prev) => prev + minutes);
+  };
+
+  const handleUpdateGoal = (totalMinutes: number) => {
+    setDailyGoalMinutes(totalMinutes);
   };
 
   return (
@@ -82,7 +97,7 @@ function App() {
         dailyGoalMinutes={dailyGoalMinutes}
       />
 
-      <main className="relative z-10 flex-1 grid grid-cols-1 overflow-y-auto lg:grid-cols-[1fr_1.5fr_1fr] gap-gutter p-container min-h-0 pb-30">
+      <main className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr_1fr] gap-gutter p-container min-h-0">
         <MixerDrawer
           focusTimeMinutes={focusTimeMinutes}
           dailyGoalMinutes={dailyGoalMinutes}
@@ -90,14 +105,12 @@ function App() {
           onClose={() => setIsDrawerOpen(false)}
         />
         <Timer
-          onSessionComplete={(mins) =>
-            setFocusTimeMinutes((prev) => prev + mins)
-          }
+          onSessionComplete={handleSessionComplete}
           isLofiPlaying={isLofiPlaying}
           currentTrackTitle={currentTrackTitle}
           onToggleLofi={toggleLofi}
         />
-        <Task onUpdateGoal={setDailyGoalMinutes} />
+        <Task onUpdateGoal={handleUpdateGoal} />
       </main>
     </div>
   );
