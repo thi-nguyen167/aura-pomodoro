@@ -11,7 +11,11 @@ export interface TaskItem {
   dateAdded: string;
 }
 
-const Task = () => {
+interface TaskProps {
+  onUpdateGoal: (totalMinutes: number) => void;
+}
+
+const Task = ({ onUpdateGoal }: TaskProps) => {
   const [tasks, setTasks] = useState<TaskItem[]>(() => {
     const savedData = localStorage.getItem("aura_tasks");
     if (savedData) {
@@ -28,9 +32,29 @@ const Task = () => {
     return [];
   });
 
+  // Hàm chuyển đổi chuỗi thời gian như "25m" hoặc "1h" sang số phút
+  const parseTimeToMinutes = (timeString: string) => {
+    if (!timeString) return 0;
+    const str = timeString.toLowerCase().trim();
+    if (str.includes("h")) {
+      return parseFloat(str) * 60;
+    }
+    return parseFloat(str) || 0;
+  };
+
   useEffect(() => {
+    let totalGoalMinutes = 0;
+    const today = new Date().toDateString();
+
+    tasks.forEach((task) => {
+      if (task.dateAdded === today) {
+        totalGoalMinutes += parseTimeToMinutes(task.time);
+      }
+    });
+
+    onUpdateGoal(totalGoalMinutes);
     localStorage.setItem("aura_tasks", JSON.stringify(tasks));
-  }, [tasks]);
+  }, [tasks, onUpdateGoal]);
 
   const activeTask = tasks.find((t) => t.status === "active");
   const pendingTasks = tasks.filter((t) => t.status === "pending");
@@ -90,6 +114,7 @@ const Task = () => {
           Tasks
         </h2>
 
+        {/* --- GROUP: FOCUSING ON --- */}
         <div className="flex flex-col gap-4 mb-12">
           <h4 className="font-sans text-sm font-bold uppercase tracking-widest text-muted opacity-80">
             Focusing On
@@ -129,6 +154,7 @@ const Task = () => {
           )}
         </div>
 
+        {/* --- GROUP: UP NEXT --- */}
         <div className="flex flex-col gap-4 mb-12">
           <h4 className="font-sans text-sm font-bold uppercase tracking-widest text-muted opacity-80">
             Up Next
@@ -180,6 +206,7 @@ const Task = () => {
           </button>
         </div>
 
+        {/* --- GROUP: DONE --- */}
         <div className="flex flex-col gap-4">
           <div className="flex justify-between items-center">
             <h4 className="font-sans text-sm font-bold uppercase tracking-widest text-muted opacity-80">

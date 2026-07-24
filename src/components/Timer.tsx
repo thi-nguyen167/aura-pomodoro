@@ -1,5 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { RotateCcw, Play, Pause, SkipForward, Music2 } from "lucide-react";
+import {
+  RotateCcw,
+  Play,
+  Pause,
+  SkipForward,
+  Music2,
+  PauseIcon,
+} from "lucide-react";
 
 const MODES = {
   focus: 25 * 60,
@@ -15,7 +22,19 @@ const SUBTITLES = {
 
 type TimerMode = "focus" | "shortBreak" | "longBreak";
 
-const Timer = () => {
+interface TimerProps {
+  onSessionComplete: (minutes: number) => void;
+  isLofiPlaying: boolean;
+  currentTrackTitle: string;
+  onToggleLofi: () => void;
+}
+
+const Timer = ({
+  onSessionComplete,
+  isLofiPlaying,
+  currentTrackTitle,
+  onToggleLofi,
+}: TimerProps) => {
   const [mode, setMode] = useState<TimerMode>("focus");
   const [timeLeft, setTimeLeft] = useState(MODES.focus);
   const [isRunning, setIsRunning] = useState(false);
@@ -47,7 +66,8 @@ const Timer = () => {
     }
 
     if (mode === "focus") {
-      console.log("Focus session complete! Progress updated.");
+      onSessionComplete(25);
+      console.log("Focus session complete! Progress updated (+25m).");
     }
 
     const notifBody =
@@ -95,7 +115,6 @@ const Timer = () => {
       const timeoutId = setTimeout(() => {
         handleCompleteSession();
       }, 0);
-
       return () => clearTimeout(timeoutId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -132,7 +151,7 @@ const Timer = () => {
       <audio
         ref={alarmAudioRef}
         id="audio-alarm"
-        src="/audio/alarm.mp3"
+        src={`${import.meta.env.BASE_URL}audio/alarm.mp3`}
         preload="auto"
       />
 
@@ -207,17 +226,23 @@ const Timer = () => {
         </div>
       </div>
 
+      {/* --- LO-FI --- */}
       <div
+        onClick={onToggleLofi}
         className="w-[80%] flex items-center gap-4 py-4 px-6 mt-2 cursor-pointer bg-glass-surface backdrop-blur-xl border border-glass-border rounded-full hover:bg-glass-highlight transition-colors"
         id="lofi-toggle"
       >
-        <Music2 size={24} className="text-on-surface shrink-0" />
+        {isLofiPlaying ? (
+          <PauseIcon size={24} className="text-on-surface shrink-0" />
+        ) : (
+          <Music2 size={24} className="text-on-surface shrink-0" />
+        )}
         <div className="flex flex-col items-start justify-center gap-1 overflow-hidden">
           <p className="font-bold tracking-widest text-primary-container text-sm">
             LO-FI BEATS
           </p>
-          <p className="text-primary truncate w-full">
-            Coffee Lofi - Chill Lofi Ambient
+          <p className="text-primary truncate w-full text-sm">
+            {currentTrackTitle}
           </p>
         </div>
       </div>
