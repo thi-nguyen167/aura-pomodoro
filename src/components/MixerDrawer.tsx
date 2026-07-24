@@ -1,4 +1,3 @@
-// src/components/MixerDrawer.tsx
 import { X, CloudHail, Coffee, TreePine, Flame } from "lucide-react";
 import { useState, useEffect, useRef, type ReactNode } from "react";
 import ProgressCard from "./ProgressCard";
@@ -49,11 +48,15 @@ const SOUND_TRACKS: SoundTrack[] = [
 interface MixerDrawerProps {
   focusTimeMinutes: number;
   dailyGoalMinutes: number;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const MixerDrawer = ({
   focusTimeMinutes,
   dailyGoalMinutes,
+  isOpen,
+  onClose,
 }: MixerDrawerProps) => {
   const [volumes, setVolumes] = useState<Record<TrackId, number>>(() => {
     const saved = localStorage.getItem("aura_audio_preset");
@@ -97,78 +100,103 @@ const MixerDrawer = ({
   };
 
   return (
-    <section
-      className="flex flex-col gap-gutter h-full relative"
-      id="mixer-drawer"
-    >
-      {SOUND_TRACKS.map((track) => (
-        <audio
-          key={track.id}
-          ref={(el) => {
-            audioRefs.current[track.id] = el;
-          }}
-          src={track.audioSrc}
-          loop
-          preload="auto"
+    <>
+      {/* Backdrop menu on mobile*/}
+      {isOpen && (
+        <div
+          onClick={onClose}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden transition-opacity"
         />
-      ))}
+      )}
 
-      <div className="lg:hidden flex justify-end w-full -mb-8 shrink-0 relative z-10">
-        <button className="w-12 h-12 rounded-full bg-glass-surface border border-solid border-glass-border flex items-center justify-center transition-all duration-200 hover:bg-glass-highlight">
-          <X className="lg:hidden cursor-pointer" id="close-mixer-btn" />
-        </button>
-      </div>
+      <section
+        className={`
+          flex flex-col gap-gutter bg-background lg:bg-transparent z-50
+          fixed top-0 left-0 h-[98vh] w-full max-w-full p-6 shadow-drop
+          transition-transform duration-300 ease-in-out
+          lg:static lg:translate-x-0 lg:h-full lg:w-auto lg:max-w-none lg:p-0 lg:shadow-none
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
+        id="mixer-drawer"
+      >
+        {SOUND_TRACKS.map((track) => (
+          <audio
+            key={track.id}
+            ref={(el) => {
+              audioRefs.current[track.id] = el;
+            }}
+            src={track.audioSrc}
+            loop
+            preload="auto"
+          />
+        ))}
 
-      <div className="flex-1 flex flex-col bg-glass-surface backdrop-blur-xl border border-glass-border rounded-4xl p-gutter gap-gutter shadow-drop">
-        <div className="shrink-0">
-          <h2 className="font-mono text-3xl font-bold text-on-surface mb-2">
-            SoundScapes
-          </h2>
-          <p className="text-muted opacity-70">Compose your atmosphere</p>
+        {/* close on mobile */}
+        <div className="lg:hidden flex justify-end w-full mb-2 shrink-0 relative z-10">
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-12 h-12 rounded-full bg-glass-surface border border-solid border-glass-border flex items-center justify-center transition-all duration-200 hover:bg-glass-highlight"
+            aria-label="Close Soundscapes"
+          >
+            <X
+              className="cursor-pointer text-on-surface"
+              id="close-mixer-btn"
+            />
+          </button>
         </div>
 
-        <div className="flex flex-col gap-6 flex-1 overflow-y-auto custom-scrollbar pr-2">
-          {SOUND_TRACKS.map((track) => (
-            <div key={track.id} className="flex flex-col gap-3">
-              <div className="flex gap-3 items-center text-on-surface">
-                {track.icon}
-                <label htmlFor={`vol-${track.id}`} className="font-semibold">
-                  {track.name}
-                </label>
-              </div>
+        <div className="flex-1 flex flex-col bg-glass-surface backdrop-blur-xl border border-glass-border rounded-4xl p-gutter gap-gutter shadow-drop overflow-hidden">
+          <div className="shrink-0">
+            <h2 className="font-mono text-3xl font-bold text-on-surface mb-2">
+              SoundScapes
+            </h2>
+            <p className="text-muted opacity-70">Compose your atmosphere</p>
+          </div>
 
-              <div className="flex items-center gap-4">
-                <input
-                  type="range"
-                  id={`vol-${track.id}`}
-                  className="vol-slider w-[88%] h-2 bg-glass-highlight rounded-full outline-none appearance-none cursor-pointer accent-primary"
-                  min="0"
-                  max="100"
-                  value={volumes[track.id]}
-                  onChange={(e) => handleVolumes(track.id, e.target.value)}
-                />
-                <span className="text-muted w-10 text-right font-mono text-sm">
-                  {volumes[track.id]}%
-                </span>
+          <div className="flex flex-col gap-6 flex-1 overflow-y-auto custom-scrollbar pr-2">
+            {SOUND_TRACKS.map((track) => (
+              <div key={track.id} className="flex flex-col gap-3">
+                <div className="flex gap-3 items-center text-on-surface">
+                  {track.icon}
+                  <label htmlFor={`vol-${track.id}`} className="font-semibold">
+                    {track.name}
+                  </label>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <input
+                    type="range"
+                    id={`vol-${track.id}`}
+                    className="vol-slider w-[88%] h-2 bg-glass-highlight rounded-full outline-none appearance-none cursor-pointer accent-primary"
+                    min="0"
+                    max="100"
+                    value={volumes[track.id]}
+                    onChange={(e) => handleVolumes(track.id, e.target.value)}
+                  />
+                  <span className="text-muted w-10 text-right font-mono text-sm">
+                    {volumes[track.id]}%
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={handleSavePreset}
+            className="shrink-0 bg-primary-container text-on-primary-container uppercase p-4 rounded-xl font-bold text-center w-full transition-all duration-200 hover:opacity-90 active:scale-95"
+          >
+            {saveBtnText}
+          </button>
         </div>
 
-        <button
-          type="button"
-          onClick={handleSavePreset}
-          className="shrink-0 bg-primary-container text-on-primary-container uppercase p-4 rounded-xl font-bold text-center w-full transition-all duration-200 hover:opacity-90 active:scale-95"
-        >
-          {saveBtnText}
-        </button>
-      </div>
-
-      <ProgressCard
-        focusTimeMinutes={focusTimeMinutes}
-        dailyGoalMinutes={dailyGoalMinutes}
-      />
-    </section>
+        <ProgressCard
+          focusTimeMinutes={focusTimeMinutes}
+          dailyGoalMinutes={dailyGoalMinutes}
+        />
+      </section>
+    </>
   );
 };
 

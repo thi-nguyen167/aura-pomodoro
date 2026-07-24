@@ -32,7 +32,6 @@ const Task = ({ onUpdateGoal }: TaskProps) => {
     return [];
   });
 
-  // Hàm chuyển đổi chuỗi thời gian như "25m" hoặc "1h" sang số phút
   const parseTimeToMinutes = (timeString: string) => {
     if (!timeString) return 0;
     const str = timeString.toLowerCase().trim();

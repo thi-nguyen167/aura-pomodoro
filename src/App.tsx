@@ -23,6 +23,7 @@ const LOFI_PLAYLIST = [
 function App() {
   const [focusTimeMinutes, setFocusTimeMinutes] = useState(0);
   const [dailyGoalMinutes, setDailyGoalMinutes] = useState(0);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const [isLofiPlaying, setIsLofiPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
@@ -61,17 +62,10 @@ function App() {
     }
   };
 
-  const handleSessionComplete = (minutes: number) => {
-    setFocusTimeMinutes((prev) => prev + minutes);
-  };
-
-  const handleUpdateGoal = (totalMinutes: number) => {
-    setDailyGoalMinutes(totalMinutes);
-  };
-
   return (
     <div className="w-screen h-screen font-sans text-base text-on-background bg-background flex flex-col overflow-x-hidden">
       <ParticleBackground />
+
       <audio
         ref={lofiAudioRef}
         id="audio-lofi"
@@ -80,20 +74,30 @@ function App() {
         preload="auto"
       />
 
-      <Header />
+      <Header
+        onOpenDrawer={() => setIsDrawerOpen(true)}
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        focusTimeMinutes={focusTimeMinutes}
+        dailyGoalMinutes={dailyGoalMinutes}
+      />
 
       <main className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr_1fr] gap-gutter p-container min-h-0">
         <MixerDrawer
           focusTimeMinutes={focusTimeMinutes}
           dailyGoalMinutes={dailyGoalMinutes}
+          isOpen={isDrawerOpen}
+          onClose={() => setIsDrawerOpen(false)}
         />
         <Timer
-          onSessionComplete={handleSessionComplete}
+          onSessionComplete={(mins) =>
+            setFocusTimeMinutes((prev) => prev + mins)
+          }
           isLofiPlaying={isLofiPlaying}
           currentTrackTitle={currentTrackTitle}
           onToggleLofi={toggleLofi}
         />
-        <Task onUpdateGoal={handleUpdateGoal} />
+        <Task onUpdateGoal={setDailyGoalMinutes} />
       </main>
     </div>
   );
