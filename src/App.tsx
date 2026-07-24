@@ -7,7 +7,7 @@ import ParticleBackground from "./components/ParticleBackground";
 
 function App() {
   return (
-    <div className="w-screen h-screen font-sans text-base text-on-background bg-background flex flex-col overflow-hidden">
+    <div className="w-screen h-screen font-sans text-base text-on-background bg-background flex flex-col overflow-x-hidden">
       <ParticleBackground />
       <Header />
 
