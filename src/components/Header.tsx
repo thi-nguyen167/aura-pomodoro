@@ -13,7 +13,9 @@ const Header = () => {
           </h1>
 
           {/* Mobile menu */}
-          <SlidersHorizontal />
+          <button className="w-12 h-12 rounded-[50%] bg-glass-surface border border-solid border-glass-border flex items-center justify-center transition-all duration-200 hover:bg-glass-highlight">
+            <SlidersHorizontal />
+          </button>
         </div>
       </header>
     </>

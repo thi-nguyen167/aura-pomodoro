@@ -70,3 +70,14 @@
     transform: scale(1.2);
   }
 }
+
+@layer base {
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: var(--font-mono);
+    color: inherit;
+    text-transform: uppercase;
+  }
+}
