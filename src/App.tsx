@@ -82,7 +82,7 @@ function App() {
         dailyGoalMinutes={dailyGoalMinutes}
       />
 
-      <main className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr_1fr] gap-gutter p-container min-h-0">
+      <main className="relative z-10 flex-1 grid grid-cols-1 overflow-y-auto lg:grid-cols-[1fr_1.5fr_1fr] gap-gutter p-container min-h-0 pb-30">
         <MixerDrawer
           focusTimeMinutes={focusTimeMinutes}
           dailyGoalMinutes={dailyGoalMinutes}

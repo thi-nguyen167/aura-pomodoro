@@ -139,7 +139,7 @@ const Timer = ({
 
   const getTabClass = (tabMode: TimerMode) => {
     const baseClass =
-      "py-2 px-6 rounded-full text-sm font-sans transition-all duration-300 ease-in-out ";
+      "text-xs md:text-base lg:text-lg py-2 px-6 rounded-full text-sm font-sans transition-all duration-300 ease-in-out ";
     if (mode === tabMode) {
       return baseClass + "bg-glass-highlight text-primary";
     }
@@ -183,10 +183,10 @@ const Timer = ({
 
         {/* TIMER DISPLAY */}
         <div className="text-center">
-          <span className="font-mono text-[9.6rem] leading-none font-bold text-on-surface tracking-tight">
+          <span className="font-mono text-5xl md:text-7xl lg:text-8xl leading-none font-bold text-on-surface tracking-tight">
             {formatTime(timeLeft)}
           </span>
-          <p className="tracking-[0.3em] font-bold text-primary-container mt-6 transition-all">
+          <p className="text-base md:text-2xl lg:text-4xl tracking-[0.3em] font-bold text-primary-container mt-6 transition-all">
             {SUBTITLES[mode]}
           </p>
         </div>
@@ -238,7 +238,7 @@ const Timer = ({
           <Music2 size={24} className="text-on-surface shrink-0" />
         )}
         <div className="flex flex-col items-start justify-center gap-1 overflow-hidden">
-          <p className="font-bold tracking-widest text-primary-container text-sm">
+          <p className="font-bold tracking-widest text-primary-container text-sm lg:text-base">
             LO-FI BEATS
           </p>
           <p className="text-primary truncate w-full text-sm">

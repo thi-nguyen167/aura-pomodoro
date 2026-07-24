@@ -111,7 +111,7 @@ const MixerDrawer = ({
 
       <section
         className={`
-          flex flex-col gap-gutter bg-background lg:bg-transparent z-50
+          flex flex-col gap-gutter bg-background lg:bg-transparent z-100
           fixed top-0 left-0 h-[98vh] w-full max-w-full p-6 shadow-drop
           transition-transform duration-300 ease-in-out
           lg:static lg:translate-x-0 lg:h-full lg:w-auto lg:max-w-none lg:p-0 lg:shadow-none
@@ -185,7 +185,7 @@ const MixerDrawer = ({
           <button
             type="button"
             onClick={handleSavePreset}
-            className="shrink-0 bg-primary-container text-on-primary-container uppercase p-4 rounded-xl font-bold text-center w-full transition-all duration-200 hover:opacity-90 active:scale-95"
+            className="text-sm lg:text-base shrink-0 bg-primary-container text-on-primary-container uppercase p-4 rounded-xl font-bold text-center w-full transition-all duration-200 hover:opacity-90 active:scale-95"
           >
             {saveBtnText}
           </button>

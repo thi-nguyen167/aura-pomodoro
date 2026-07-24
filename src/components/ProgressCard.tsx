@@ -21,18 +21,18 @@ const ProgressCard = ({
 
   return (
     <div className="flex flex-col bg-glass-surface backdrop-blur-xl border border-glass-border rounded-4xl p-6 gap-gutter">
-      <h3 className="font-sans text-base font-bold uppercase text-primary-container mb-4 tracking-widest">
+      <h3 className="font-sans text-sm lg:text-base font-bold uppercase text-primary-container mb-4 tracking-widest">
         Daily Progress
       </h3>
       <div className="flex justify-between items-end">
         <div>
-          <p className="font-mono text-4xl font-extrabold text-primary">
+          <p className="font-mono text-2xl lg:text-4xl font-extrabold text-primary">
             {hours}h
           </p>
           <p className="font-sans text-muted text-sm mt-1">Focus Time</p>
         </div>
         <div className="text-right">
-          <p className="font-mono text-3xl font-bold text-primary-container">
+          <p className="font-mono text:2xl lg:text-3xl font-bold text-primary-container">
             {percentage}%
           </p>
           <p className="font-sans text-muted text-sm mt-1">{goalText}</p>
