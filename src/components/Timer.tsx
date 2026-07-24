@@ -186,7 +186,7 @@ const Timer = ({
           <span className="font-mono text-7xl lg:text-8xl leading-none font-bold text-on-surface tracking-tight">
             {formatTime(timeLeft)}
           </span>
-          <p className="text-base md:text-2xl lg:text-4xl tracking-[0.3em] font-bold text-primary-container mt-6 transition-all">
+          <p className="text-sm md:text-base lg:text-xl tracking-[0.3em] font-bold text-primary-container mt-6 transition-all">
             {SUBTITLES[mode]}
           </p>
         </div>

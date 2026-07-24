@@ -4,12 +4,10 @@ import { loadTrianglesPreset } from "@tsparticles/preset-triangles";
 import type { Container, Engine, ISourceOptions } from "@tsparticles/engine";
 
 export default function TriangleParticles() {
-  // Pass this callback directly to the ParticlesProvider wrapper
   const particlesInit = useCallback(async (engine: Engine): Promise<void> => {
     await loadTrianglesPreset(engine);
   }, []);
 
-  // Track when the container successfully renders on the canvas
   const particlesLoaded = useCallback(
     async (container?: Container): Promise<void> => {
       console.log("tsParticles container fully initialized", container);
@@ -17,29 +15,39 @@ export default function TriangleParticles() {
     [],
   );
 
-  // Memoize the preset options to prevent redundant re-renders
   const options: ISourceOptions = useMemo(
     () => ({
       particles: {
-        shape: { type: "square" },
-        opacity: {
-          value: 1,
+        number: {
+          value: 80,
         },
+        shape: { type: "square" },
       },
       responsive: [
         {
           maxWidth: 1024,
           options: {
-            particles: { number: { value: 50 } },
+            particles: {
+              number: { value: 80 },
+              opacity: {
+                value: 0.25,
+              },
+              links: {
+                opacity: 0.15,
+              },
+            },
           },
         },
         {
           maxWidth: 768,
           options: {
             particles: {
-              number: { value: 30 },
+              number: { value: 20 },
               opacity: {
-                value: 0.1,
+                value: 0.15,
+              },
+              links: {
+                opacity: 0.08,
               },
             },
           },
