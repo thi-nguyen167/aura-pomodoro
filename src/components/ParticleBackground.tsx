@@ -20,6 +20,31 @@ export default function TriangleParticles() {
   // Memoize the preset options to prevent redundant re-renders
   const options: ISourceOptions = useMemo(
     () => ({
+      particles: {
+        shape: { type: "square" },
+        opacity: {
+          value: 1,
+        },
+      },
+      responsive: [
+        {
+          maxWidth: 1024,
+          options: {
+            particles: { number: { value: 50 } },
+          },
+        },
+        {
+          maxWidth: 768,
+          options: {
+            particles: {
+              number: { value: 30 },
+              opacity: {
+                value: 0.1,
+              },
+            },
+          },
+        },
+      ],
       preset: "triangles",
     }),
     [],

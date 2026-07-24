@@ -33,7 +33,9 @@ const MixerDrawer = () => {
   return (
     <section className="flex flex-col gap-gutter h-full" id="mixer-drawer">
       <div className="lg:hidden flex justify-end w-full -mb-8 shrink-0">
-        <X className="lg:hidden cursor-pointer" id="close-mixer-btn" />
+        <button className="w-12 h-12 rounded-[50%] bg-glass-surface border border-solid border-glass-border flex items-center justify-center transition-all duration-200 hover:bg-glass-highlight">
+          <X className="lg:hidden cursor-pointer" id="close-mixer-btn" />
+        </button>
       </div>
 
       <div className="flex-1 flex flex-col bg-glass-surface backdrop-blur-xl border border-glass-border rounded-4xl p-gutter gap-gutter">
