@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import "./App.css";
 import Header from "./components/Header";
 import MixerDrawer from "./components/MixerDrawer";
 import Timer from "./components/Timer";

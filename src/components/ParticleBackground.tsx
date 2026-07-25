@@ -19,13 +19,13 @@ export default function TriangleParticles() {
     () => ({
       particles: {
         number: {
-          value: 20,
+          value: 30,
         },
         shape: { type: "square" },
         links: {
           triangles: {
             enable: true,
-            opacity: 0.1,
+            opacity: 0.15,
             width: 1,
           },
         },
@@ -36,12 +36,14 @@ export default function TriangleParticles() {
   );
 
   return (
-    <ParticlesProvider init={particlesInit}>
-      <Particles
-        id="tsparticles"
-        particlesLoaded={particlesLoaded}
-        options={options}
-      />
-    </ParticlesProvider>
+    <div className="fixed inset-0 z-1 pointer-events-none">
+      <ParticlesProvider init={particlesInit}>
+        <Particles
+          id="tsparticles"
+          particlesLoaded={particlesLoaded}
+          options={options}
+        />
+      </ParticlesProvider>
+    </div>
   );
 }
