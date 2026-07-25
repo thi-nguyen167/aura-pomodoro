@@ -111,9 +111,8 @@ function App() {
           onToggleLofi={toggleLofi}
         />
         <Task onUpdateGoal={handleUpdateGoal} />
+        <Footer />
       </main>
-
-      <Footer />
     </div>
   );
 }
