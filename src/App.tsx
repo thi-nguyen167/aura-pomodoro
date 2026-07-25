@@ -78,7 +78,7 @@ function App() {
   };
 
   return (
-    <div className="w-screen h-screen font-sans text-base text-on-background bg-background flex flex-col overflow-x-hidden">
+    <div className="w-screen h-screen font-sans text-base text-on-background bg-background flex flex-col justify-around overflow-x-hidden">
       <ParticleBackground />
 
       <audio
@@ -97,20 +97,22 @@ function App() {
         dailyGoalMinutes={dailyGoalMinutes}
       />
 
-      <main className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr_1fr] gap-gutter p-container min-h-0">
-        <MixerDrawer
-          focusTimeMinutes={focusTimeMinutes}
-          dailyGoalMinutes={dailyGoalMinutes}
-          isOpen={isDrawerOpen}
-          onClose={() => setIsDrawerOpen(false)}
-        />
-        <Timer
-          onSessionComplete={handleSessionComplete}
-          isLofiPlaying={isLofiPlaying}
-          currentTrackTitle={currentTrackTitle}
-          onToggleLofi={toggleLofi}
-        />
-        <Task onUpdateGoal={handleUpdateGoal} />
+      <main className="relative z-10 flex flex-col flex-1 min-h-0">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr_1fr] gap-gutter p-container ">
+          <MixerDrawer
+            focusTimeMinutes={focusTimeMinutes}
+            dailyGoalMinutes={dailyGoalMinutes}
+            isOpen={isDrawerOpen}
+            onClose={() => setIsDrawerOpen(false)}
+          />
+          <Timer
+            onSessionComplete={handleSessionComplete}
+            isLofiPlaying={isLofiPlaying}
+            currentTrackTitle={currentTrackTitle}
+            onToggleLofi={toggleLofi}
+          />
+          <Task onUpdateGoal={handleUpdateGoal} />
+        </div>
         <Footer />
       </main>
     </div>
