@@ -1,3 +1,4 @@
+
 # Aura Pomodoro TypeScript
 
 [![Live Demo](https://img.shields.io/badge/Demo-Live_Site-000000?style=for-the-badge&logo=vercel)](https://thi-nguyen167.github.io/aura-pomodoro/)
@@ -14,14 +15,20 @@ A highly interactive, aesthetic Pomodoro timer and task management application d
 <details>
   <summary><b>Click to view full Desktop Version</b></summary>
   <br/>
-  <img alt="Desktop Preview" src="" />
+  <img width="2880" height="1784" alt="Desktop Preview" src="https://github.com/user-attachments/assets/bc6b21a2-c9b3-4399-93e7-23c2515743e5" /><img width="850" height="2418" alt="thi-nguyen167 github io_aura-pomodoro_ (1)" src="https://github.com/user-attachments/assets/e0ba6f72-2d46-483e-9162-de56132fc447" />
+
 </details>
 
 <details>
   <summary><b>Click to view full Mobile Version</b></summary>
   <br/>
-  <img alt="Mobile Preview" src="" />
+  
+  <img width="48%" alt="Mobile Preview" src="https://github.com/user-attachments/assets/574cae0f-59f0-499b-ae14-a100aff86d0a" /> <img width="48%" alt="Mobile Menu Preview" src="https://github.com/user-attachments/assets/daf1fff5-a6b5-4a76-8094-f37a41ec75f8" />
+  
 </details>
+
+
+
 
 ## Description
 
