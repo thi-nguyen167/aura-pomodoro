@@ -4,6 +4,7 @@ import MixerDrawer from "./components/MixerDrawer";
 import Timer from "./components/Timer";
 import Task from "./components/Task";
 import ParticleBackground from "./components/ParticleBackground";
+import Footer from "./components/Footer";
 
 const BASE_URL = import.meta.env.BASE_URL;
 
@@ -111,6 +112,8 @@ function App() {
         />
         <Task onUpdateGoal={handleUpdateGoal} />
       </main>
+
+      <Footer />
     </div>
   );
 }
