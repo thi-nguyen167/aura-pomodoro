@@ -54,24 +54,59 @@ The application features a sleek glassmorphism UI, interactive particle backgrou
   npm install
   ```
 
-### Executing program
+### Configuration & Tech Stack Setup (Reference)
 
-- To run the project locally and compile CSS changes, start the Tailwind CLI watcher:
+If you are replicating this project or setting up a similar environment from scratch, here is how the core visual libraries were configured:
+
+- Tailwind CSS Setup:
 
   ```bash
-  npx tailwindcss -i ./styles.css -o ./output.css --watch
+  npm install tailwindcss @tailwindcss/vite
   ```
 
-- Open the index.html file in your web browser. Alternatively, use an extension like VS Code Live Server for automatic hot-reloading as you make changes.
+  Custom configurations (glassmorphism borders, specific color palettes, and responsive breakpoints) are defined inside tailwind.config.js and global styles are applied in index.css.
+
+Then you can read more information how to set up a tailwindcss with vite in the link below (Acknowledgments section)
+
+- tsParticles Setup:
+
+The dynamic, interactive background is powered by tsParticles with the Triangles preset, optimized specifically for mobile readability.
+
+```bash
+npm install @tsparticles/react @tsparticles/preset-triangles @tsparticles/engine
+```
+
+The particles are rendered via the <ParticlesProvider> and configured inside src/components/ParticleBackground.tsx to automatically dim on smaller screens, ensuring the text remains legible.
+
+- Lucide Icons Setup:
+
+This project uses `lucide-react` for lightweight, beautiful, and consistent SVG iconography across the dashboard.
+
+```bash
+npm install lucide-react
+```
+
+Icons are imported as standard React components and easily styled using Tailwind CSS classes.
+
+### Executing program
+
+- To run the project locally with hot-module reloading (HMR), start the Vite development server:
+
+  ```bash
+  npm run dev
+  ```
+
+- Open the local host link (usually http://localhost:5173) provided in your terminal in your web browser.
+
+###
 
 ### Help
 
-- If you notice that your Tailwind classes are not applying to the HTML, ensure the Tailwind CLI watcher is actively running in your terminal.
-- If the scroll animations feel laggy, verify that the requestAnimationFrame logic is intact in your script.js file.
-  ```bash
-  # Check if Tailwind CLI is running and watching for changes
-  npm run dev # (If configured in package.json)
-  ```
+- Audio not playing automatically? Modern browsers block audio autoplay until the user interacts with the page. Simply click anywhere on the page or toggle the Lo-fi button to start the audio engine.
+
+- Particles blocking text or clicks? Ensure the `ParticlesProvider` is wrapped in a container with the `z-1` and `pointer-events-none` classes. This pushes the animation to the background and stops it from intercepting your mouse interactions.
+
+- If you encounter caching issues with Local Storage during development, you can clear it via your browser's Developer Tools (F12) -> Application -> Local Storage.
 
 ### Author
 
@@ -84,6 +119,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs/installation/tailwind-cli)
-- [Google Fonts](https://fonts.google.com/)
-- Inspiration from premium architectural and editorial design (Awwwards).
+- [React](https://react.dev/) & [Vite](https://vitejs.dev/) - Core UI framework and blazing-fast build tool.
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs) - Utility-first CSS framework for rapid UI development.
+- [tsParticles](https://particles.js.org/) - For the lightweight, animated particle background.
+- [Lucide React](https://lucide.dev/) - For the beautiful, consistent, and easily customizable iconography.
