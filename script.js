@@ -22,3 +22,17 @@
     },
   });
 })();
+
+// DOM elements
+const drawerBtn = document.getElementById("open-mixer-btn");
+const mixerContainer = document.getElementById("mixer-drawer");
+const closeDrawerBtn = document.getElementById("close-mixer-btn");
+
+// Open/close the drawer in smaller screen
+drawerBtn.addEventListener("click", () => {
+  mixerContainer.classList.add("is-open");
+});
+
+closeDrawerBtn.addEventListener("click", () => {
+  mixerContainer.classList.remove("is-open");
+});
