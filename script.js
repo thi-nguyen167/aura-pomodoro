@@ -149,10 +149,18 @@ const TIMER_SETTINGS = {
 };
 
 let currentMode = "focus";
+let isRunning = false;
+let timerInterval = null;
 
 const timeDisplay = document.querySelector(".timer__time");
 const subtitleDisplay = document.querySelector(".timer__subtitle");
 const modeTabs = document.querySelectorAll(".timer__tab");
+
+const playBtn = document.querySelector(".timer__btn--play");
+const playIcon = playBtn?.querySelector(".material-symbols-outlined");
+const resetBtn = document.querySelector(".timer__btn--reset");
+const skipBtn = document.querySelector(".timer__btn--skip");
+
 let timeLeftbySeconds = TIMER_SETTINGS[currentMode].minutes * 60;
 
 const formatTime = (seconds) => {
@@ -171,8 +179,48 @@ const updateTimerDisplay = () => {
     timeDisplay.textContent = formatTime(timeLeftbySeconds);
   }
 };
+
+// Pause Timer
+const pauseTimer = () => {
+  isRunning = false;
+
+  clearInterval(timerInterval);
+  if (playIcon) playIcon.textContent = "play_arrow";
+};
+
+// Play timer
+const playTimer = () => {
+  isRunning = true;
+  if (playIcon) playIcon.textContent = "pause";
+
+  timerInterval = setInterval(() => {
+    if (timeLeftbySeconds > 0) {
+      timeLeftbySeconds--;
+      updateTimerDisplay();
+    } else {
+      pauseTimer();
+
+      // Auto-switch to break or focus when done
+      if (currentMode === "focus") {
+        setMode("shortBreak");
+      } else {
+        setMode("focus");
+      }
+    }
+  }, 1000);
+};
+
+const toggleTimer = () => {
+  if (isRunning) {
+    pauseTimer();
+  } else {
+    playTimer();
+  }
+};
+
 // choose a mode
 const setMode = (mode) => {
+  pauseTimer();
   currentMode = mode;
 
   timeLeftbySeconds = TIMER_SETTINGS[mode].minutes * 60;
@@ -203,4 +251,15 @@ modeTabs.forEach((tab) => {
   });
 });
 
+playBtn.addEventListener("click", toggleTimer);
+resetBtn.addEventListener("click", () => {
+  setMode("focus");
+});
+skipBtn.addEventListener("click", () => {
+  if (currentMode === "focus") {
+    setMode("shortBreak");
+  } else {
+    setMode("focus");
+  }
+});
 updateTimerDisplay();
