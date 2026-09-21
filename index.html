@@ -1,192 +1,274 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aura Pomodoro</title>
     <link rel="stylesheet" href="styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-triangles@3/tsparticles.preset.triangles.bundle.min.js"></script>
+  </head>
 
-    <script
-        src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-triangles@3/tsparticles.preset.triangles.bundle.min.js">
-        </script>
+  <body>
+    <div id="tsparticles"></div>
 
-</head>
-
-<body>
-    
     <header class="header">
-        <div class="brand-container">
-            <h1 class="brand-name">Aura <br /> <span class="brand-name-sm">Pomodoro</span></h1>
+      <div class="header__brand">
+        <h1 class="header__title">
+          Aura <br />
+          <span class="header__subtitle">Pomodoro</span>
+        </h1>
 
-            <button type="button" class="btn-icon mobile-menu-btn" id="open-mixer-btn" aria-label="Open Soundscapes">
-                <span class="material-symbols-outlined">tune</span>
-            </button>
-        </div>
+        <button
+          type="button"
+          class="btn btn--icon header__menu-btn"
+          id="open-mixer-btn"
+          aria-label="Open Soundscapes"
+        >
+          <span class="material-symbols-outlined">tune</span>
+        </button>
+      </div>
     </header>
-    <main class="main-dashboard">
 
-        <section class="panel-left" id="mixer-drawer">
+    <main class="dashboard">
+      <!-- Left Panel: Mixer & Tracking -->
+      <section
+        class="dashboard__panel dashboard__panel--left"
+        id="mixer-drawer"
+      >
+        <div class="drawer__header">
+          <button
+            type="button"
+            class="btn btn--icon drawer__close-btn"
+            id="close-mixer-btn"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
 
-            <div class="drawer-container">
-                <button type="button" class="btn-icon mobile-menu-btn" id="close-mixer-btn">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
+        <div class="mixer card">
+          <div class="mixer__header">
+            <h2 class="mixer__title">SoundScapes</h2>
+            <p class="mixer__subtitle text--muted text--md">
+              Compose your atmosphere
+            </p>
+          </div>
+
+          <div class="mixer__controls">
+            <!-- Rain -->
+            <div class="mixer__item">
+              <div class="mixer__label">
+                <span class="material-symbols-outlined">rainy</span>
+                <label for="vol-rain" class="sr-only">Rain</label>
+              </div>
+              <div class="mixer__slider">
+                <input
+                  type="range"
+                  id="vol-rain"
+                  class="mixer__input"
+                  min="0"
+                  max="100"
+                  value="0"
+                />
+                <span class="mixer__percentage">45%</span>
+              </div>
             </div>
 
-            <div class="mixer-card">
-                <div class="mixer-title-container">
-                    <h2>SoundScapes</h2>
-                    <p class="text-muted body-md">Compose your atmosphere</p>
-                </div>
-
-                <div class="mixer-controls">
-                    <div class="mixer-item">
-                        <div class="mixer-label">
-                            <span class="material-symbols-outlined">rainy</span>
-                            <label for="vol-rain" class="sr-only">Rain</label>
-                        </div>
-                        <div class="mixer-slider">
-                            <input type="range" id="vol-rain" class="vol-slider" min="0" max="100" value="0">
-                            <span class="vol-percentage">45%</span>
-                        </div>
-                    </div>
-
-                    <div class="mixer-item">
-                        <div class="mixer-label">
-                            <span class="material-symbols-outlined">local_cafe</span>
-                            <label for="vol-cafe" class="sr-only">Cafe</label>
-                        </div>
-                        <div class="mixer-slider">
-                            <input type="range" id="vol-cafe" class="vol-slider" min="0" max="100" value="0">
-                            <span class="vol-percentage">20%</span>
-                        </div>
-                    </div>
-
-                    <div class="mixer-item">
-                        <div class="mixer-label">
-                            <span class="material-symbols-outlined">forest</span>
-                            <label for="vol-forest" class="sr-only">Forest</label>
-                        </div>
-                        <div class="mixer-slider">
-                            <input type="range" id="vol-forest" class="vol-slider" min="0" max="100" value="0">
-                            <span class="vol-percentage">0%</span>
-                        </div>
-                    </div>
-                    <div class="mixer-item">
-                        <div class="mixer-label">
-                            <span class="material-symbols-outlined">mode_heat</span>
-                            <label for="vol-fire" class="sr-only">Campfire</label>
-                        </div>
-                        <div class="mixer-slider">
-                            <input type="range" id="vol-fire" class="vol-slider" min="0" max="100" value="0" />
-                            <span class="vol-percentage">0%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" class="btn btn-primary" id="save-preset-btn">Save Preset</button>
+            <!-- Cafe -->
+            <div class="mixer__item">
+              <div class="mixer__label">
+                <span class="material-symbols-outlined">local_cafe</span>
+                <label for="vol-cafe" class="sr-only">Cafe</label>
+              </div>
+              <div class="mixer__slider">
+                <input
+                  type="range"
+                  id="vol-cafe"
+                  class="mixer__input"
+                  min="0"
+                  max="100"
+                  value="0"
+                />
+                <span class="mixer__percentage">20%</span>
+              </div>
             </div>
 
-            <div class="tracking-card">
-                <h3 class="tracking-title">Daily Progress</h3>
-                <div class="tracking-stats">
-                    <div class="stat-box">
-                        <p class="stat-value">4.5h</p>
-                        <p class="stat-label">Focus Time</p>
-                    </div>
-                    <div class="stat-box">
-                        <p class="stat-percentage">82%</p>
-                        <p class="stat-label">Goal Met</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel-mid">
-
-            <div class="timer-card glass-card">
-                <div class="timer-tabs">
-                    <button type="button" class="btn btn-tab active" data-mode="focus">Focus</button>
-                    <button type="button" class="btn btn-tab" data-mode="shortBreak">Short Break</button>
-                    <button type="button" class="btn btn-tab" data-mode="longBreak">Long Break</button>
-                </div>
-
-                <div class="timer-display">
-                    <span class="time-huge">25:00</span>
-                    <p class="timer-subtitle">STAY IN THE FLOW</p>
-                </div>
-
-                <div class="timer-controls">
-                    <button type="button" class="btn-reset" aria-label="Reset Timer">
-                        <span class="material-symbols-outlined">refresh</span>
-                    </button>
-                    <button type="button" class="btn-play" aria-label="Play Timer">
-                        <span class="material-symbols-outlined">play_arrow</span>
-                    </button>
-                    <button type="button" class="btn-skip" aria-label="Skip Session">
-                        <span class="material-symbols-outlined">skip_next</span>
-                    </button>
-                </div>
+            <!-- Forest -->
+            <div class="mixer__item">
+              <div class="mixer__label">
+                <span class="material-symbols-outlined">forest</span>
+                <label for="vol-forest" class="sr-only">Forest</label>
+              </div>
+              <div class="mixer__slider">
+                <input
+                  type="range"
+                  id="vol-forest"
+                  class="mixer__input"
+                  min="0"
+                  max="100"
+                  value="0"
+                />
+                <span class="mixer__percentage">0%</span>
+              </div>
             </div>
 
-            <div class="lofi-card glass-card" id="lofi-toggle">
-                <span class="material-symbols-outlined" id="lofi-icon">music_note</span>
-                <div class="lofi-info">
-                    <p class="lofi-label">LO-FI BEATS</p>
-                    <p class="lofi-track">Coffee Lofi - Chill Lofi Ambient</p>
-                </div>
+            <!-- Campfire -->
+            <div class="mixer__item">
+              <div class="mixer__label">
+                <span class="material-symbols-outlined">mode_heat</span>
+                <label for="vol-fire" class="sr-only">Campfire</label>
+              </div>
+              <div class="mixer__slider">
+                <input
+                  type="range"
+                  id="vol-fire"
+                  class="mixer__input"
+                  min="0"
+                  max="100"
+                  value="0"
+                />
+                <span class="mixer__percentage">0%</span>
+              </div>
             </div>
-        </section>
+          </div>
 
-        <section class="panel-right">
+          <button
+            type="button"
+            class="btn btn--primary mixer__save-btn"
+            id="save-preset-btn"
+          >
+            Save Preset
+          </button>
+        </div>
 
-            <div class="task-card">
-                <h2>Tasks</h2>
-
-                <div class="task-group">
-                    <h4 class="group-label">FOCUSING ON</h4>
-                    <div class="task-item active-task" id="active-task-container">
-                        <p>What is your main focus?</p>
-                    </div>
-                </div>
-
-                <div class="task-group">
-                    <h4 class="group-label">UP NEXT</h4>
-                    <ul class="task-list" id="up-next-list"></ul>
-                    <button type="button" class="btn btn-tertiary" id="add-task-btn">+ Add new task</button>
-                </div>
-
-                <div class="task-group">
-                    <div class="group-header">
-                        <h4 class="group-label">DONE</h4>
-                        <span class="badge" id="done-badge">0 Today</span>
-                    </div>
-                    <ul class="task-list done-list" id="done-list"></ul>
-                </div>
+        <div class="tracking card">
+          <h3 class="tracking__title">Daily Progress</h3>
+          <div class="tracking__stats">
+            <div class="stat">
+              <p class="stat__value">4.5h</p>
+              <p class="stat__label">Focus Time</p>
             </div>
-        </section>
+            <div class="stat">
+              <p class="stat__value stat__value--percentage">82%</p>
+              <p class="stat__label">Goal Met</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      <!-- Mid Panel: Timer & Lofi -->
+      <section class="dashboard__panel dashboard__panel--mid">
+        <div class="timer card card--glass">
+          <div class="timer__tabs">
+            <button
+              type="button"
+              class="btn timer__tab timer__tab--active"
+              data-mode="focus"
+            >
+              Focus
+            </button>
+            <button type="button" class="btn timer__tab" data-mode="shortBreak">
+              Short Break
+            </button>
+            <button type="button" class="btn timer__tab" data-mode="longBreak">
+              Long Break
+            </button>
+          </div>
+
+          <div class="timer__display">
+            <span class="timer__time">25:00</span>
+            <p class="timer__subtitle">STAY IN THE FLOW</p>
+          </div>
+
+          <div class="timer__controls">
+            <button
+              type="button"
+              class="btn btn--icon timer__btn timer__btn--reset"
+              aria-label="Reset Timer"
+            >
+              <span class="material-symbols-outlined">refresh</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn--icon timer__btn timer__btn--play"
+              aria-label="Play Timer"
+            >
+              <span class="material-symbols-outlined">play_arrow</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn--icon timer__btn timer__btn--skip"
+              aria-label="Skip Session"
+            >
+              <span class="material-symbols-outlined">skip_next</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="lofi card card--glass" id="lofi-toggle">
+          <span class="material-symbols-outlined lofi__icon" id="lofi-icon"
+            >music_note</span
+          >
+          <div class="lofi__info">
+            <p class="lofi__label">LO-FI BEATS</p>
+            <p class="lofi__track">Coffee Lofi - Chill Lofi Ambient</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Tasks -->
+      <section class="dashboard__panel dashboard__panel--right">
+        <div class="tasks card">
+          <h2 class="tasks__title">Tasks</h2>
+
+          <div class="tasks__group">
+            <h4 class="tasks__group-label">FOCUSING ON</h4>
+            <div class="task task--active" id="active-task-container">
+              <p class="task__text">What is your main focus?</p>
+            </div>
+          </div>
+
+          <div class="tasks__group">
+            <h4 class="tasks__group-label">UP NEXT</h4>
+            <ul class="tasks__list" id="up-next-list"></ul>
+            <button
+              type="button"
+              class="btn btn--tertiary tasks__add-btn"
+              id="add-task-btn"
+            >
+              + Add new task
+            </button>
+          </div>
+
+          <div class="tasks__group">
+            <div class="tasks__group-header">
+              <h4 class="tasks__group-label">DONE</h4>
+              <span class="badge tasks__badge" id="done-badge">0 Today</span>
+            </div>
+            <ul class="tasks__list tasks__list--done" id="done-list"></ul>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
-        <p>&copy; 2026 Aura. All rights reserved. | Designed and Developed by Thi Nguyen</p>
+      <p class="footer__text">
+        &copy; 2026 Aura. All rights reserved. | Designed and Developed by Thi
+        Nguyen
+      </p>
     </footer>
 
+    <!-- Audio Elements -->
     <audio id="audio-rain" src="audio/rain.mp3" loop></audio>
     <audio id="audio-cafe" src="audio/cafe.mp3" loop></audio>
     <audio id="audio-forest" src="audio/forest.mp3" loop></audio>
     <audio id="audio-fire" src="audio/fire.mp3" loop></audio>
     <audio id="audio-lofi" src="audio/lofi-1.mp3"></audio>
-
-
     <audio id="audio-alarm" src="audio/alarm.mp3"></audio>
 
-
     <script src="script.js"></script>
-</body>
-
-</body>
-
+  </body>
 </html>
