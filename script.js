@@ -140,3 +140,67 @@ const loadPreset = () => {
   });
 };
 loadPreset();
+
+// ----- TIMER LOGIC ------
+const TIMER_SETTINGS = {
+  focus: { minutes: 25, subtitle: "STAY IN THE FLOW" },
+  shortBreak: { minutes: 5, subtitle: "TAKE A BREATHER" },
+  longBreak: { minutes: 15, subtitle: "RECHARGE YOURSELF" },
+};
+
+let currentMode = "focus";
+
+const timeDisplay = document.querySelector(".timer__time");
+const subtitleDisplay = document.querySelector(".timer__subtitle");
+const modeTabs = document.querySelectorAll(".timer__tab");
+let timeLeftbySeconds = TIMER_SETTINGS[currentMode].minutes * 60;
+
+const formatTime = (seconds) => {
+  const m = Math.floor(seconds / 60)
+    .toString()
+    .padStart(2, "0");
+
+  const s = (seconds % 60).toString().padStart(2, "0");
+
+  return `${m}:${s}`;
+};
+
+// Update the timer display
+const updateTimerDisplay = () => {
+  if (timeDisplay) {
+    timeDisplay.textContent = formatTime(timeLeftbySeconds);
+  }
+};
+// choose a mode
+const setMode = (mode) => {
+  currentMode = mode;
+
+  timeLeftbySeconds = TIMER_SETTINGS[mode].minutes * 60;
+
+  // active the selected mode
+  modeTabs.forEach((tab) => {
+    if (tab.dataset.mode === mode) {
+      tab.classList.add("timer__tab--active");
+    } else {
+      tab.classList.remove("timer__tab--active");
+    }
+  });
+
+  //   Update the timer
+  updateTimerDisplay();
+
+  //   Update the text display
+  if (subtitleDisplay) {
+    subtitleDisplay.textContent = TIMER_SETTINGS[mode].subtitle;
+  }
+};
+
+// choose a mode tab
+modeTabs.forEach((tab) => {
+  tab.addEventListener("click", (e) => {
+    const selectedMode = e.target.dataset.mode;
+    setMode(selectedMode);
+  });
+});
+
+updateTimerDisplay();
