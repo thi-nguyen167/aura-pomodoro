@@ -88,7 +88,7 @@ ul {
 }
 
 .header,
-.main-dashboard,
+.dashboard,
 .footer {
   position: relative;
   z-index: 10;
@@ -97,7 +97,7 @@ ul {
 /* =========================================
    TYPOGRAPHY
    ========================================= */
-h1.brand-name {
+.header__title {
   font-family: var(--font-mono);
   font-size: 5.2rem;
   font-weight: 700;
@@ -106,7 +106,7 @@ h1.brand-name {
   text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.4);
 }
 
-.brand-name-sm {
+.header__subtitle {
   font-family: var(--font-sans);
   font-size: 2.4rem;
   text-transform: uppercase;
@@ -114,13 +114,14 @@ h1.brand-name {
   color: var(--primary-container);
 }
 
-h2 {
+.mixer__title,
+.tasks__title {
   font-family: var(--font-mono);
   font-size: 3.2rem;
   font-weight: 600;
 }
 
-h4.group-label {
+.tasks__group-label {
   font-family: var(--font-sans);
   font-size: 1.6rem;
   font-weight: 700;
@@ -130,7 +131,7 @@ h4.group-label {
   opacity: 0.8;
 }
 
-.text-muted {
+.text--muted {
   color: var(--text-muted);
   opacity: 0.7;
 }
@@ -140,16 +141,17 @@ h4.group-label {
    ========================================= */
 .header {
   padding: var(--container-padding) var(--container-padding) 0;
+  flex-shrink: 0;
 }
 
-.brand-container {
+.header__brand {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
 
-.main-dashboard {
+.dashboard {
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1.5fr 1fr;
@@ -158,27 +160,23 @@ h4.group-label {
   min-height: 0;
 }
 
-.header,
 .footer {
   flex-shrink: 0;
-  /* Protects them from being squished by the middle section */
 }
 
-.panel-left,
-.panel-mid,
-.panel-right {
+.dashboard__panel {
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
   height: 100%;
 }
 
-.panel-mid {
+.dashboard__panel--mid {
   align-items: center;
   justify-content: center;
 }
 
-.drawer-container {
+.drawer__header {
   display: flex;
   justify-content: flex-end;
   width: 100%;
@@ -188,11 +186,7 @@ h4.group-label {
 /* =========================================
    GLASSMORPHISM BASE COMPONENT
    ========================================= */
-.mixer-card,
-.tracking-card,
-.timer-card,
-.lofi-card,
-.task-card {
+.card {
   background-color: var(--glass-surface);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
@@ -206,14 +200,14 @@ h4.group-label {
 /* =========================================
    LEFT PANEL: MIXER & PROGRESS
    ========================================= */
-.mixer-card {
+.mixer {
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
   flex: 1;
 }
 
-.mixer-controls {
+.mixer__controls {
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
@@ -221,32 +215,32 @@ h4.group-label {
   overflow-y: auto;
 }
 
-.mixer-item {
+.mixer__item {
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
 }
 
-.mixer-label {
+.mixer__label {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
 
-.mixer-slider {
+.mixer__slider {
   display: flex;
   align-items: center;
   gap: 1.6rem;
 }
 
-.vol-percentage {
+.mixer__percentage {
   color: var(--text-muted);
   width: 3rem;
   text-align: right;
 }
 
 /* Custom Slider */
-.vol-slider {
+.mixer__input {
   -webkit-appearance: none;
   width: 88%;
   height: 6px;
@@ -254,10 +248,9 @@ h4.group-label {
   border-radius: var(--radius-full);
   outline: none;
   appearance: none;
-  /* <-- Add the standard property last */
 }
 
-.vol-slider::-webkit-slider-thumb {
+.mixer__input::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 16px;
   height: 16px;
@@ -268,11 +261,11 @@ h4.group-label {
   transition: transform 0.2s ease;
 }
 
-.vol-slider::-webkit-slider-thumb:hover {
+.mixer__input::-webkit-slider-thumb:hover {
   transform: scale(1.2);
 }
 
-.btn-primary {
+.btn--primary {
   background-color: var(--primary-container);
   color: var(--on-primary-container);
   padding: 1.6rem;
@@ -285,20 +278,20 @@ h4.group-label {
     transform 0.1s;
 }
 
-.btn-primary:hover {
+.btn--primary:hover {
   opacity: 0.9;
 }
 
-.btn-primary:active {
+.btn--primary:active {
   transform: scale(0.98);
 }
 
 /* Daily Progress */
-.tracking-card {
+.tracking {
   padding: 2.4rem;
 }
 
-.tracking-title {
+.tracking__title {
   font-family: var(--font-sans);
   font-size: 1.6rem;
   text-transform: uppercase;
@@ -306,26 +299,26 @@ h4.group-label {
   margin-bottom: 1.6rem;
 }
 
-.tracking-stats {
+.tracking__stats {
   display: flex;
   justify-content: space-between;
 }
 
-.stat-value {
+.stat__value {
   font-family: var(--font-mono);
   font-size: 2.8rem;
   font-weight: 700;
   color: var(--primary);
 }
 
-.stat-label {
-  font-family: var(--font-sub);
+.stat__label {
+  font-family: var(--font-sans);
 }
 
 /* =========================================
    MIDDLE PANEL: TIMER & LO-FI
    ========================================= */
-.timer-card {
+.timer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -333,7 +326,7 @@ h4.group-label {
   box-shadow: var(--shadow-glow);
 }
 
-.timer-tabs {
+.timer__tabs {
   display: flex;
   gap: 0.8rem;
   background: var(--glass-surface);
@@ -341,7 +334,7 @@ h4.group-label {
   border-radius: var(--radius-full);
 }
 
-.btn-tab {
+.timer__tab {
   padding: 0.8rem 2.4rem;
   border-radius: var(--radius-full);
   font-size: 1.4rem;
@@ -349,17 +342,17 @@ h4.group-label {
   transition: all 0.3s ease;
 }
 
-.btn-tab.active,
-.btn-tab:hover {
+.timer__tab--active,
+.timer__tab:hover {
   background: var(--glass-highlight);
   color: var(--primary);
 }
 
-.timer-display {
+.timer__display {
   text-align: center;
 }
 
-.time-huge {
+.timer__time {
   font-family: var(--font-mono);
   font-size: 9.6rem;
   font-weight: 700;
@@ -368,19 +361,19 @@ h4.group-label {
   letter-spacing: -0.05em;
 }
 
-.timer-subtitle {
+.timer__subtitle {
   letter-spacing: 0.3em;
   color: var(--primary-container);
   margin-top: 1.6rem;
 }
 
-.timer-controls {
+.timer__controls {
   display: flex;
   align-items: center;
   gap: 2.4rem;
 }
 
-.btn-icon {
+.btn--icon {
   width: 4.8rem;
   height: 4.8rem;
   border-radius: 50%;
@@ -392,11 +385,11 @@ h4.group-label {
   transition: background 0.2s;
 }
 
-.btn-icon:hover {
+.btn--icon:hover {
   background: var(--glass-highlight);
 }
 
-.btn-play {
+.timer__btn--play {
   width: 8rem;
   height: 8rem;
   border-radius: 50%;
@@ -409,16 +402,16 @@ h4.group-label {
   transition: transform 0.2s ease;
 }
 
-.btn-play .material-symbols-outlined {
+.timer__btn--play .material-symbols-outlined {
   font-size: 4.8rem;
 }
 
-.btn-play:hover {
+.timer__btn--play:hover {
   transform: scale(1.05);
 }
 
 /* Lo-Fi Player */
-.lofi-card {
+.lofi {
   display: flex;
   align-items: center;
   gap: 1.6rem;
@@ -428,33 +421,33 @@ h4.group-label {
   cursor: pointer;
 }
 
-.lofi-label {
+.lofi__label {
   font-weight: 700;
   letter-spacing: 0.1em;
   color: var(--primary-container);
   margin-bottom: 0.8rem;
 }
 
-.lofi-track {
+.lofi__track {
   color: var(--primary);
 }
 
 /* =========================================
    RIGHT PANEL: TASKS
    ========================================= */
-.task-card {
+.tasks {
   flex: 1;
   overflow-y: auto;
 }
 
-.task-group {
+.tasks__group {
   margin: 4.8rem 0;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
 }
 
-.group-header {
+.tasks__group-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -468,7 +461,7 @@ h4.group-label {
   border-radius: var(--radius-full);
 }
 
-.task-item {
+.task {
   background: var(--glass-surface);
   border: 1px solid var(--glass-border);
   padding: 1.6rem;
@@ -480,17 +473,23 @@ h4.group-label {
   transition: background 0.2s;
 }
 
-.task-item.active-task {
+.task--active {
   border-left: 4px solid var(--primary-container);
 }
 
-.task-item.completed {
+.task--completed {
   display: flex;
   align-items: center;
   justify-content: start;
+  opacity: 0.5;
+  background: transparent;
 }
 
-.task-list {
+.task--completed .task__text {
+  text-decoration: line-through;
+}
+
+.tasks__list {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -498,40 +497,32 @@ h4.group-label {
   overflow-y: auto;
   padding-right: 0.6rem;
 }
+
 /* design the scroll bar */
-.task-card::-webkit-scrollbar,
-.task-list::-webkit-scrollbar {
+.tasks::-webkit-scrollbar,
+.tasks__list::-webkit-scrollbar {
   width: 0.6rem;
 }
-.task-card::-webkit-scrollbar,
-.task-list::-webkit-scrollbar-track {
+
+.tasks::-webkit-scrollbar-track,
+.tasks__list::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.02);
   border-radius: var(--radius-full);
 }
-.task-card::-webkit-scrollbar,
-.task-list::-webkit-scrollbar-thumb {
+
+.tasks::-webkit-scrollbar-thumb,
+.tasks__list::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-full);
   transition: background 0.3s;
 }
-.task-card::-webkit-scrollbar,
-.task-list::-webkit-scrollbar-thumb:hover {
+
+.tasks::-webkit-scrollbar-thumb:hover,
+.tasks__list::-webkit-scrollbar-thumb:hover {
   background: var(--primary-container);
 }
 
-.checkbox-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-  cursor: pointer;
-}
-
-.task-time {
-  font-size: 1.4rem;
-  color: var(--text-muted);
-}
-
-.btn-tertiary {
+.btn--tertiary {
   margin-top: 3.2rem;
   color: var(--text-muted);
   font-size: 1.4rem;
@@ -542,17 +533,8 @@ h4.group-label {
   transition: color 0.2s;
 }
 
-.btn-tertiary:hover {
+.btn--tertiary:hover {
   color: var(--primary);
-}
-
-.task-item.completed {
-  opacity: 0.5;
-  background: transparent;
-}
-
-.task-item.completed .task-text {
-  text-decoration: line-through;
 }
 
 .footer {
@@ -568,7 +550,7 @@ h4.group-label {
    ========================================= */
 @media (max-width: 1024px) {
   /* Change Grid to a single vertical column */
-  .main-dashboard {
+  .dashboard {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -576,8 +558,8 @@ h4.group-label {
   }
 
   /* Adjust Timer and Task cards to take full width */
-  .panel-mid,
-  .panel-right {
+  .dashboard__panel--mid,
+  .dashboard__panel--right {
     width: 100%;
     gap: 2.4rem;
   }
@@ -585,13 +567,11 @@ h4.group-label {
   /* =========================================
        THE MIXER DRAWER
        ========================================= */
-
   /* Hide the left panel off the screen by default */
-  .panel-left {
+  .dashboard__panel--left {
     position: fixed;
     top: 0;
     left: -100%;
-    /* Hides it to the left */
     width: 85%;
     max-width: 400px;
     height: 98vh;
@@ -599,17 +579,16 @@ h4.group-label {
     z-index: 100;
     padding: 4rem 2.4rem;
     transition: left 0.3s ease-in-out;
-    /* Smooth sliding animation */
     box-shadow: var(--shadow-drop);
   }
 
-  /* When the 'open' class is added via JS, slide it in */
-  .panel-left.open {
+  /* When the 'is-open' class is added via JS, slide it in */
+  .dashboard__panel--left.is-open {
     left: 0;
   }
 
   /* Hamburger Menu Button (Visible only on mobile) */
-  .mobile-menu-btn {
+  .header__menu-btn {
     display: flex;
   }
 }
@@ -625,19 +604,19 @@ h4.group-label {
     font-size: 45%;
   }
 
-  .task-item {
+  .task {
     flex-direction: column;
     align-items: start;
   }
 
-  .task-item.completed {
+  .task--completed {
     flex-direction: row;
   }
 }
 
 /* Hide the hamburger button on Desktop */
 @media (min-width: 1025px) {
-  .mobile-menu-btn {
+  .header__menu-btn {
     display: none;
   }
 }
