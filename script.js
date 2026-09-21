@@ -268,3 +268,5 @@ skipBtn.addEventListener("click", () => {
   }
 });
 updateTimerDisplay();
+
+// ----- TASK LOGIC -----
