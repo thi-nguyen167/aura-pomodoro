@@ -161,6 +161,8 @@ const playIcon = playBtn?.querySelector(".material-symbols-outlined");
 const resetBtn = document.querySelector(".timer__btn--reset");
 const skipBtn = document.querySelector(".timer__btn--skip");
 
+const alarmAudio = document.getElementById("audio-alarm");
+
 let timeLeftbySeconds = TIMER_SETTINGS[currentMode].minutes * 60;
 
 const formatTime = (seconds) => {
@@ -177,6 +179,7 @@ const formatTime = (seconds) => {
 const updateTimerDisplay = () => {
   if (timeDisplay) {
     timeDisplay.textContent = formatTime(timeLeftbySeconds);
+    document.title = `${formatTime(timeLeftbySeconds)} - Aura Pomodoro`;
   }
 };
 
@@ -199,6 +202,8 @@ const playTimer = () => {
       updateTimerDisplay();
     } else {
       pauseTimer();
+      if (alarmAudio)
+        alarmAudio.play().catch((e) => console.log("Alarm blocked", e));
 
       // Auto-switch to break or focus when done
       if (currentMode === "focus") {
