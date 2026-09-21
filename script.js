@@ -81,3 +81,62 @@ sounds.forEach((sound) => {
     }
   });
 });
+
+// LocalStorage
+const savePresetBtn = document.getElementById("save-preset-btn");
+
+savePresetBtn.addEventListener("click", () => {
+  const currentPreset = {};
+
+  sounds.forEach((sound) => {
+    const inputEl = document.getElementById(sound.id);
+
+    if (inputEl) {
+      currentPreset[sound.id] = inputEl.value;
+    }
+  });
+
+  //   Save to localStorage
+  localStorage.setItem("aura_sound_preset", JSON.stringify(currentPreset));
+
+  savePresetBtn.textContent = "Saved!";
+  setTimeout(() => {
+    savePresetBtn.textContent = "Save Preset";
+  }, 2000);
+});
+
+// Saved even after reload page
+const loadPreset = () => {
+  // get the storage
+  const savedData = localStorage.getItem("aura_sound_preset");
+
+  if (!savedData) return;
+
+  const parsedPreset = JSON.parse(savedData);
+
+  sounds.forEach((sound) => {
+    const inputEl = document.getElementById(sound.id);
+    const audioEl = document.getElementById(sound.audio);
+    const percentageEl = inputEl?.nextElementSibling;
+    if (inputEl && audioEl && parsedPreset[sound.id] !== undefined) {
+      const savedValue = parsedPreset[sound.id];
+      const volumeLevel = savedValue / 100;
+
+      // Show slide and percentage
+      inputEl.value = savedValue;
+      if (percentageEl) {
+        percentageEl.textContent = `${savedValue}%`;
+      }
+
+      // show Audio
+      audioEl.volume = volumeLevel;
+
+      if (volumeLevel > 0) {
+        audioEl
+          .play()
+          .catch((error) => console.log("Audio play failed: ", error));
+      }
+    }
+  });
+};
+loadPreset();
