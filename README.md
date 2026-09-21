@@ -28,7 +28,7 @@ A sleek, feature-rich Pomodoro timer application designed to help you stay in th
 - **Beautiful, Responsive UI**
   _ Animated particle background powered by `tsParticles` for a calm, aesthetic environment.
   _ Fully responsive design with a mobile-friendly menu drawer.
-  <img width="2880" height="1784" alt="thi-miranda348 github io_aura-pomodoro_" src="https://github.com/user-attachments/assets/17040b7b-4574-4037-9acc-ae4c7c9ff55e" />
+  <img width="2880" height="1784" alt="thi-nguyen167 github io_aura-pomodoro_" src="https://github.com/user-attachments/assets/17040b7b-4574-4037-9acc-ae4c7c9ff55e" />
 
 ## Getting Started
 
@@ -39,7 +39,7 @@ Since Aura Pomodoro is built with vanilla web technologies, you don't need any c
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone [https://github.com/thi-miranda348/aura-pomodoro.git](https://github.com/thi-miranda348/aura-pomodoro.git)
+   git clone https://github.com/thi-nguyen167/aura-pomodoro.git
    ```
 
 2. Navigate into the project folder:
@@ -72,4 +72,4 @@ Since Aura Pomodoro is built with vanilla web technologies, you don't need any c
 
 Thi Anh Thi Nguyen
 
-- GitHub: @thi-miranda348
+- GitHub: @thi-nguyen167
