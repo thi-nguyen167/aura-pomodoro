@@ -278,7 +278,7 @@ const doneList = document.getElementById("done-list");
 const activeTask = document.getElementById("active-task-container");
 const doneBadge = document.getElementById("done-badge");
 
-let tasks = [];
+let tasks = JSON.parse(localStorage.getItem("aura_tasks")) || [];
 
 // Update the task on the screen
 const renderTasks = () => {
@@ -347,6 +347,9 @@ const renderTasks = () => {
   if (doneBadge) {
     doneBadge.textContent = `${doneCount} Today`;
   }
+
+  // Save to localStorage
+  localStorage.setItem("aura_tasks", JSON.stringify(tasks));
 };
 
 // Add Task Logic
