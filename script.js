@@ -270,3 +270,37 @@ skipBtn.addEventListener("click", () => {
 updateTimerDisplay();
 
 // ----- TASK LOGIC -----
+const taskInput = document.getElementById("task-input");
+const addTaskBtn = document.getElementById("add-task-btn");
+
+const upNextList = document.getElementById("up-next-list");
+const doneList = document.getElementById("done-list");
+const activeTask = document.getElementById("active-task-container");
+const doneBadge = document.getElementById("done-badge");
+
+let tasks = [];
+
+// Update the task on the screen
+const renderTask = () => {
+  console.log(tasks, "tasks");
+};
+
+// Add Task Logic
+const handleAddTask = () => {
+  const taskInputValue = taskInput.value.trim();
+
+  if (taskInputValue) {
+    const newTask = {
+      id: Date.now().toString(),
+      taskInputValue,
+    };
+
+    tasks = [...tasks, newTask];
+
+    taskInput.value = "";
+
+    renderTask();
+  }
+};
+
+addTaskBtn.addEventListener("click", handleAddTask);

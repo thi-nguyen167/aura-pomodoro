@@ -456,13 +456,11 @@ ul {
 .badge {
   background: rgba(98, 219, 188, 0.1);
   color: var(--secondary);
-  font-size: 1.2rem;
-  padding: 0.4rem 1.2rem;
+  font-size: 1rem;
+  padding: 0.4rem 0.8rem;
   border-radius: var(--radius-full);
-  font-weight: 600;
 }
 
-/* Base Task Item */
 .task {
   background: var(--glass-surface);
   border: 1px solid var(--glass-border);
@@ -472,18 +470,11 @@ ul {
   justify-content: space-between;
   align-items: center;
   gap: 1.2rem;
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
-}
-
-.task:hover {
-  background: var(--glass-highlight);
+  transition: background 0.2s;
 }
 
 .task--active {
   border-left: 4px solid var(--primary-container);
-  box-shadow: var(--shadow-glow);
 }
 
 .task--completed {
@@ -492,71 +483,53 @@ ul {
   justify-content: start;
   opacity: 0.5;
   background: transparent;
-  box-shadow: none;
 }
 
-.task--completed:hover {
-  background: transparent;
-}
-
-.task--completed .task__title {
+.task--completed .task__text {
   text-decoration: line-through;
 }
 
-/* Task Layout Elements */
-.task__main {
+.tasks__list {
   display: flex;
   flex-direction: column;
-  flex: 1;
-}
-
-.task__title {
-  font-weight: 600;
-  font-size: 1.6rem;
-  margin-bottom: 0.4rem;
-}
-
-.task__time {
-  font-size: 1.2rem;
-}
-
-.task__controls {
-  display: flex;
   gap: 0.8rem;
-  align-items: center;
+  max-height: 25vh;
+  overflow-y: auto;
+  padding-right: 0.6rem;
 }
 
-/* Input in Focusing On */
-.task__input {
-  width: 100%;
-  background: transparent;
-  border: none;
-  color: var(--on-surface);
+#task-input {
   font-family: inherit;
-  font-size: 1.6rem;
-  outline: none;
-  padding: 0.4rem 0;
+  font-size: inherit;
+  padding: 1rem;
+  border: 1px solid var(--glass-border);
+  background-color: inherit;
+  border-radius: var(--radius-sm);
+  color: var(--primary);
 }
 
-.task__input::placeholder {
-  color: var(--text-muted);
-  opacity: 0.7;
+/* design the scroll bar */
+.tasks::-webkit-scrollbar,
+.tasks__list::-webkit-scrollbar {
+  width: 0.6rem;
 }
 
-/* Custom Checkbox Wrapper */
-.checkbox-wrapper {
-  flex: 1;
-  display: flex;
-  gap: 1.2rem;
-  align-items: center;
-  cursor: pointer;
+.tasks::-webkit-scrollbar-track,
+.tasks__list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-full);
 }
 
-.icon-success {
-  color: var(--primary-container);
+.tasks::-webkit-scrollbar-thumb,
+.tasks__list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  transition: background 0.3s;
 }
-.icon-danger {
-  color: #ff6b6b;
+
+.tasks::-webkit-scrollbar-thumb:hover,
+.tasks__list::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-container);
 }
 
 .btn--tertiary {
