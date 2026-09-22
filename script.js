@@ -278,6 +278,8 @@ const doneList = document.getElementById("done-list");
 const activeTask = document.getElementById("active-task-container");
 const doneBadge = document.getElementById("done-badge");
 
+const tasksPanel = document.querySelector(".dashboard__panel--right");
+
 let tasks = JSON.parse(localStorage.getItem("aura_tasks")) || [];
 
 // Update the task on the screen
@@ -379,6 +381,50 @@ taskInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     handleAddTask();
   }
+});
+
+// Event for all task buttons (Delete, Focus, Complete, Checkbox)
+tasksPanel.addEventListener("click", (e) => {
+  // Find the closest element that has a 'data-action' attribute
+  const actionTarget = e.target.closest("[data-action]");
+
+  if (!actionTarget) return;
+
+  const action = actionTarget.dataset.action;
+  const taskId = actionTarget.dataset.id;
+
+  const task = tasks.find((t) => t.id === taskId);
+
+  if (!task && action !== "delete") return;
+
+  // Handle the specific action
+  switch (action) {
+    case "cancel-active":
+      // Move from FOCUSING ON back to UP NEXT
+      task.status = "pending";
+      break;
+
+    case "complete-active":
+    case "toggle-pending":
+      // Mark as DONE (works for both the active task and clicking the checkbox in UP NEXT)
+      task.status = "done";
+      break;
+
+    case "set-active":
+      // Find if there is already an active task and demote it to pending
+      tasks.forEach((t) => {
+        if (t.status === "active") t.status = "pending";
+      });
+      // Promote this specific task to active
+      task.status = "active";
+      break;
+
+    case "delete":
+      tasks = tasks.filter((t) => t.id !== taskId);
+      break;
+  }
+
+  renderTasks();
 });
 
 renderTasks();
