@@ -498,6 +498,16 @@ ul {
   padding-right: 0.6rem;
 }
 
+#task-input {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1rem;
+  border: 1px solid var(--glass-border);
+  background-color: inherit;
+  border-radius: var(--radius-sm);
+  color: var(--primary);
+}
+
 /* design the scroll bar */
 .tasks::-webkit-scrollbar,
 .tasks__list::-webkit-scrollbar {
