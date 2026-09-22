@@ -304,3 +304,10 @@ const handleAddTask = () => {
 };
 
 addTaskBtn.addEventListener("click", handleAddTask);
+
+// Press enter to submit the add task
+taskInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    handleAddTask();
+  }
+});
