@@ -268,3 +268,163 @@ skipBtn.addEventListener("click", () => {
   }
 });
 updateTimerDisplay();
+
+// ----- TASK LOGIC -----
+const taskInput = document.getElementById("task-input");
+const addTaskBtn = document.getElementById("add-task-btn");
+
+const upNextList = document.getElementById("up-next-list");
+const doneList = document.getElementById("done-list");
+const activeTask = document.getElementById("active-task-container");
+const doneBadge = document.getElementById("done-badge");
+
+const tasksPanel = document.querySelector(".dashboard__panel--right");
+
+let tasks = JSON.parse(localStorage.getItem("aura_tasks")) || [];
+
+// Update the task on the screen
+const renderTasks = () => {
+  //Clear the lists before rendering so they don't duplicate
+  upNextList.innerHTML = "";
+  doneList.innerHTML = "";
+
+  let doneCount = 0;
+  let hasActive = false;
+
+  tasks.forEach((task) => {
+    if (task.status === "active") {
+      hasActive = true;
+      activeTask.innerHTML = `
+        <div class="task__main">
+            <p class="task__title">${task.taskInputValue}</p>
+        </div>
+        <div class="task__controls">
+            <button type="button" class="btn btn--icon" data-action="cancel-active" data-id="${task.id}" aria-label="Cancel Focus">
+                <span class="material-symbols-outlined" style="font-size: 2rem;">close</span>
+            </button>
+            <button type="button" class="btn btn--icon" data-action="complete-active" data-id="${task.id}" aria-label="Complete Focus Task">
+                <span class="material-symbols-outlined icon-success" style="font-size: 2rem;">check_circle</span>
+            </button>
+        </div>
+      `;
+    } else if (task.status === "pending") {
+      upNextList.insertAdjacentHTML(
+        "beforeend",
+        `
+        <li class="task">
+            <label class="checkbox-wrapper" data-action="toggle-pending" data-id="${task.id}">
+                <input type="checkbox" style="pointer-events: none;"> 
+                <span class="task__title">${task.taskInputValue}</span>
+            </label>
+            <div class="task__controls">
+                <button type="button" class="btn btn--icon" data-action="set-active" data-id="${task.id}" style="width: 3.2rem; height: 3.2rem;" aria-label="Set as Focus">
+                    <span class="material-symbols-outlined" style="font-size: 1.8rem;">play_arrow</span>
+                </button>
+                <button type="button" class="btn btn--icon" data-action="delete" data-id="${task.id}" style="width: 3.2rem; height: 3.2rem;" aria-label="Delete Task">
+                    <span class="material-symbols-outlined icon-danger" style="font-size: 1.8rem;">delete</span>
+                </button>
+            </div>
+        </li>
+      `,
+      );
+    } else if (task.status === "done") {
+      doneCount++;
+      doneList.insertAdjacentHTML(
+        "beforeend",
+        `
+        <li class="task task--completed">
+            <span class="material-symbols-outlined icon-success">check_circle</span>
+            <span class="task__title">${task.taskInputValue}</span>
+        </li>
+      `,
+      );
+    }
+  });
+
+  // Restore the placeholder text if the active task is completed or cancelled
+  if (!hasActive) {
+    activeTask.innerHTML = `<p class="task__text text--muted">What is your main focus?</p>`;
+  }
+
+  if (doneBadge) {
+    doneBadge.textContent = `${doneCount} Today`;
+  }
+
+  // Save to localStorage
+  localStorage.setItem("aura_tasks", JSON.stringify(tasks));
+};
+
+// Add Task Logic
+const handleAddTask = () => {
+  const taskInputValue = taskInput.value.trim();
+
+  if (taskInputValue) {
+    const hasActive = tasks.some((task) => task.status === "active");
+    const newTask = {
+      id: Date.now().toString(),
+      taskInputValue,
+      status: hasActive ? "pending" : "active",
+    };
+
+    tasks = [...tasks, newTask];
+
+    taskInput.value = "";
+
+    renderTasks();
+  }
+};
+
+addTaskBtn.addEventListener("click", handleAddTask);
+
+// Press enter to submit the add task
+taskInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    handleAddTask();
+  }
+});
+
+// Event for all task buttons (Delete, Focus, Complete, Checkbox)
+tasksPanel.addEventListener("click", (e) => {
+  // Find the closest element that has a 'data-action' attribute
+  const actionTarget = e.target.closest("[data-action]");
+
+  if (!actionTarget) return;
+
+  const action = actionTarget.dataset.action;
+  const taskId = actionTarget.dataset.id;
+
+  const task = tasks.find((t) => t.id === taskId);
+
+  if (!task && action !== "delete") return;
+
+  // Handle the specific action
+  switch (action) {
+    case "cancel-active":
+      // Move from FOCUSING ON back to UP NEXT
+      task.status = "pending";
+      break;
+
+    case "complete-active":
+    case "toggle-pending":
+      // Mark as DONE (works for both the active task and clicking the checkbox in UP NEXT)
+      task.status = "done";
+      break;
+
+    case "set-active":
+      // Find if there is already an active task and demote it to pending
+      tasks.forEach((t) => {
+        if (t.status === "active") t.status = "pending";
+      });
+      // Promote this specific task to active
+      task.status = "active";
+      break;
+
+    case "delete":
+      tasks = tasks.filter((t) => t.id !== taskId);
+      break;
+  }
+
+  renderTasks();
+});
+
+renderTasks();
