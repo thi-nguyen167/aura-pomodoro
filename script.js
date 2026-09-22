@@ -281,8 +281,72 @@ const doneBadge = document.getElementById("done-badge");
 let tasks = [];
 
 // Update the task on the screen
-const renderTask = () => {
-  console.log(tasks, "tasks");
+const renderTasks = () => {
+  //Clear the lists before rendering so they don't duplicate
+  upNextList.innerHTML = "";
+  doneList.innerHTML = "";
+
+  let doneCount = 0;
+  let hasActive = false;
+
+  tasks.forEach((task) => {
+    if (task.status === "active") {
+      hasActive = true;
+      activeTask.innerHTML = `
+        <div class="task__main">
+            <p class="task__title">${task.taskInputValue}</p>
+        </div>
+        <div class="task__controls">
+            <button type="button" class="btn btn--icon" data-action="cancel-active" data-id="${task.id}" aria-label="Cancel Focus">
+                <span class="material-symbols-outlined" style="font-size: 2rem;">close</span>
+            </button>
+            <button type="button" class="btn btn--icon" data-action="complete-active" data-id="${task.id}" aria-label="Complete Focus Task">
+                <span class="material-symbols-outlined icon-success" style="font-size: 2rem;">check_circle</span>
+            </button>
+        </div>
+      `;
+    } else if (task.status === "pending") {
+      upNextList.insertAdjacentHTML(
+        "beforeend",
+        `
+        <li class="task">
+            <label class="checkbox-wrapper" data-action="toggle-pending" data-id="${task.id}">
+                <input type="checkbox" style="pointer-events: none;"> 
+                <span class="task__title">${task.taskInputValue}</span>
+            </label>
+            <div class="task__controls">
+                <button type="button" class="btn btn--icon" data-action="set-active" data-id="${task.id}" style="width: 3.2rem; height: 3.2rem;" aria-label="Set as Focus">
+                    <span class="material-symbols-outlined" style="font-size: 1.8rem;">play_arrow</span>
+                </button>
+                <button type="button" class="btn btn--icon" data-action="delete" data-id="${task.id}" style="width: 3.2rem; height: 3.2rem;" aria-label="Delete Task">
+                    <span class="material-symbols-outlined icon-danger" style="font-size: 1.8rem;">delete</span>
+                </button>
+            </div>
+        </li>
+      `,
+      );
+    } else if (task.status === "done") {
+      doneCount++;
+      doneList.insertAdjacentHTML(
+        "beforeend",
+        `
+        <li class="task task--completed">
+            <span class="material-symbols-outlined icon-success">check_circle</span>
+            <span class="task__title">${task.taskInputValue}</span>
+        </li>
+      `,
+      );
+    }
+  });
+
+  // Restore the placeholder text if the active task is completed or cancelled
+  if (!hasActive) {
+    activeTask.innerHTML = `<p class="task__text text--muted">What is your main focus?</p>`;
+  }
+
+  if (doneBadge) {
+    doneBadge.textContent = `${doneCount} Today`;
+  }
 };
 
 // Add Task Logic
@@ -290,16 +354,18 @@ const handleAddTask = () => {
   const taskInputValue = taskInput.value.trim();
 
   if (taskInputValue) {
+    const hasActive = tasks.some((task) => task.status === "active");
     const newTask = {
       id: Date.now().toString(),
       taskInputValue,
+      status: hasActive ? "pending" : "active",
     };
 
     tasks = [...tasks, newTask];
 
     taskInput.value = "";
 
-    renderTask();
+    renderTasks();
   }
 };
 
@@ -311,3 +377,5 @@ taskInput.addEventListener("keypress", (e) => {
     handleAddTask();
   }
 });
+
+renderTasks();
